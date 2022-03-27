@@ -1,0 +1,1892 @@
+% !TeX spellcheck = el_GR
+% !TeX program = xelatex
+% !TeX encoding = utf8
+
+\documentclass[11pt,a4paper,titlepage,fleqn]{article}
+
+\usepackage{titletoc}
+
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks=false, %set true if you want colored links
+	linktoc=all,     %set to all if you want both sections and subsections linked
+	linkcolor=blue,  %choose some color if you want links to stand out
+}
+\def\subsectionautorefname{Άσκηση}%
+
+
+\usepackage{tocloft}
+
+\usepackage{lipsum}  
+\usepackage{wrapfig}
+
+\usepackage{fontspec}
+\setmainfont[Script=Greek]{GFS Artemisia}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+
+
+
+
+
+\author{Anonymous}
+\title{Ηλεκτρονική 2}
+
+\usepackage{subcaption}
+%\newcommand*\fakecaption{\addtocounter{figure}{-1}\captionsetup{format=empty, skip=0pt}\caption{}}
+%\captionsetup[figure,minipage]{labelformat=empty}%
+\usepackage{float}
+
+
+
+\usepackage[usestackEOL]{stackengine}
+\usepackage{scalerel}
+\usepackage{graphicx,amsmath}
+\usepackage{icomma}
+%\usepackage{mathtools}
+\usepackage[makeroom]{cancel}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\showboxdepth=5
+\showboxbreadth=5
+
+
+\makeatletter
+\renewcommand{\cftpartfont}{\LARGE\bfseries}
+\setlength{\cftpartindent}{8em}
+%\renewcommand\thepart{\Alph{part}}
+\setlength{\@fptop}{0pt}
+
+\renewrobustcmd{\anw@true}{\let\ifanw@\iftrue}
+\renewrobustcmd{\anw@false}{\let\ifanw@\iffalse}\anw@false
+\newrobustcmd{\noanw@true}{\let\ifnoanw@\iftrue}
+\newrobustcmd{\noanw@false}{\let\ifnoanw@\iffalse}\noanw@false
+\renewrobustcmd{\anw@print}{\ifanw@\ifnoanw@\else\numer@lsign\fi\fi}
+\newrobustcmd{\noanw}{\noanw@true}
+\makeatother
+
+\usepackage{siunitx}
+\sisetup{	input-decimal-markers={,}, 
+	output-decimal-marker = {,}}
+
+%\sisetup{inter-unit-product = {-}}
+
+
+\usepackage[siunitx, RPvoltages]{circuitikz}
+\usetikzlibrary{patterns}
+\usetikzlibrary{external}
+
+\usepackage{tikz}
+\tikzexternalize[prefix=figures/] % activate!
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+
+%\ctikzset{bipoles/thickness=3, line width=3pt}
+\ctikzset{transistors/arrow pos=end}
+\ctikzset{tripoles/mos style/arrows}
+\ctikzset{tripoles/pmos style/nocircle}
+% scaling the cirquits
+\ctikzset{resistors/scale=0.8,
+	capacitors/scale=0.7,
+	diodes/scale=0.6,
+	%terminal/scale=1.3,
+	transistors/scale=1.3}
+
+
+\def\coord(#1){coordinate(#1)}
+%\def\showcoord(#1){coordinate(#1) node[circle, red, draw, inner sep=1pt,
+%pin={[red, overlay, inner sep=0.5pt, font=\tiny, pin distance=0.1cm,
+%pin edge={red, overlay}]45:#1}](){}}
+%\let\coord=\normalcoord
+%\let\coord=\showcoord
+
+\newcommand{\marknode}[2][45]{%
+	\node[circle, draw, red, inner sep=1pt,
+	pin={[red, font=\tiny]#1:#2}] at (#2.center) {};
+}
+
+
+\parskip \baselineskip
+\def\myupbracefill#1{\rotatebox{90}{\stretchto{\{}{#1}}}
+\def\rlwd{.5pt}
+\newcommand\notate[4][B]{%
+	\if B#1\else\def\myupbracefill##1{}\fi%
+	\def\useanchorwidth{T}%
+	\setbox0=\hbox{$\displaystyle#2$}%
+	\def\stackalignment{c}\stackunder[-6pt]{%
+		\def\stackalignment{c}\stackunder[-1.5pt]{%
+			\stackunder[2pt]{\strut $\displaystyle#2$}{\myupbracefill{\wd0}}}{%
+			\rule{\rlwd}{#3\baselineskip}}}{%
+		\strut\kern9pt$\rightarrow$\smash{\rlap{$~\displaystyle#4$}}}%
+}
+
+
+%\showboxdepth=\maxdimen
+%\showboxbreadth=\maxdimen
+
+
+\begin{document}
+		\maketitle
+		
+		\tableofcontents
+
+\part{Ασκήσεις από opencourses.auth.gr}
+\section{Διαφορικός Ενισχυτής με MOS και BJT}
+
+	\subsection{Άσκηση}
+	\label{sec:D.F16F13}
+	
+	Σε διαφορικό ενισχυτή με διπολικά τρανζίστορ και ωμικό φορτίο χρησιμοποιούμε πηγή ρεύματος πόλωσης 6mA. Τα δύο τρανζίστορ έχουν $\alpha=1$ και δεν είναι ταιριασμένα: το ένα έχει μιάμιση φορά μεγαλύτερη επιφάνεια ένωσης εκπομπού από το άλλο.
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item Για διαφορικό σήμα εισόδου μηδέν volt ποιες είναι οι τιμές των ρευμάτων συλλέκτη;
+		\item Πόση διαφορική είσοδο απαιτείται για ισοστάθμιση των ρευμάτων συλλέκτη;
+	\end{enumerate}
+
+	\textbf{Λύση}
+		\begin{enumerate}[label=\noanw\alph*.]
+		\item Το ρεύμα πόλωσης θα μοιραστεί στα δύο τρανζίστορ ανάλογα με την επιφάνεια  ένωσης εκπομπού του καθενός. Επομένως, χωρίς είσοδο θα είναι: $I_{E1}=1,5I_{E2}$ και
+		$I_{E1}+I_{E2}=6\SI{}{\mA} \Rightarrow 1,5I_{E2}+I_{E2}=6\SI{}{\mA} \Rightarrow 2,5I_{E2}=6\SI{}{\mA} \Rightarrow I_{E2}=2,5\SI{}{\mA}$, και $I_{E1}=3,6\SI{}{\mA}$\\
+		Για $\alpha=1$ θα είναι: $I_{C1}=3,6\SI{}{\mA}$ και $I_{C2}=2,4\SI{}{\mA}$
+		\item Για την ισοστάθμιση των ρευμάτων συλλέκτη έστω ότι χρειάζεται μια διαφορική τάση $V_d=V_{B2}-V_{B1}$.
+		Τα ρεύματα $i_{E1}$ και $i_{E2}$ είναι: 
+		$i_{E1} = I_{S1} \cdot e ^ {((V_{B1} - V_E) / V_T)}$ 
+		
+		
+		$i_{E2} = I_{S2} \cdot e ^ {((V_{B2} - V_E) / V_T)}$,
+		όπου $\frac{I_{S1}}{I_{S2}} = 1,5$ 
+		Για να είναι τα δύο ρεύματα ίσα θα πρέπει να ισχύει:
+		$\frac{i_{E1}}{i_{E2}} = 1 \Rightarrow 1 =   1,5 e ^ {((V_{B1} - V_{B2}) / V_T)} $  $\Rightarrow V_d = V_{B2}-V_{B1}=V_T ln1,5=10,14\SI{}{\mV}$
+		\end{enumerate}
+	
+	\subsection{Άσκηση}
+	\label{sec:D.S16}
+	
+	Μια τεχνική εξουδετέρωσης της εκτροπής υλοποιείται με το κύκλωμα 
+		του σχήματος. Να βρεθεί το κλάσμα x του ποτενσιομέτρου που συνδέεται σε σειρά με την  $R_{C1}$ για την εξουδετέρωση της τάσης εκτροπής που εμφανίζεται στην έξοδο όταν:
+		
+\begin{minipage}[t]{0.6\linewidth}
+	\vspace{10pt}
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item Η $R_{C1}$ είναι 5\% μεγαλύτερη από την ονομαστική της τιμή και η $R_{C2}$ 5\% μικρότερη.
+		\item To τρανζίστορ $Q_1$ έχει επιφάνεια 10\% μεγαλύτερη από το $Q_2$.
+	\end{enumerate}
+  \end{minipage}
+\begin{minipage}[t]{0.5\linewidth}
+	\vspace{0pt}
+	\hspace{8pt}
+	\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[npn,xscale=-1](Q2){\scalebox{-1}[1]{$Q_1$}};
+		\draw (Q2.C) to[R, l2_=$R_{C1}$ and \SI{5}{k\ohm}] ++(0,3);
+		\draw (Q2.B) node[ocirc, right]{};
+		\draw (Q2.E) to[short] ++(0,-1)
+		to[short] ++ (-2,0)
+		to[isource, l= \SI{2}{m\ampere}] ++(0,-3) node[vee](vee){};
+		\draw (Q2.C) to[short] ++(-1,0) node[ocirc, left]{};
+		
+		\draw (-4,0) node[npn](Q1){$Q_2$};
+		\draw (Q1.B) node[ocirc, left]{};
+		\draw (Q1.C) to[R, l2^=$R_{C2}$ and \SI{5}{k\ohm}]
+		++(0,3) to[short] ++(1,0) 
+		to[pR, name=P] ++(2,0)
+		to[short] ++(1,0);
+		
+		\node[circle, inner sep=1pt ] at (P.north east) {$\quad1-x$};
+		\node[circle, inner sep=1pt ] at (P.north west) {$x$};
+		
+		\draw (P.wiper) node[vcc](VCC){$V_{CC}$} ++(0,1) ; 
+		\draw (Q1.E) to[short] ++(0,-1)
+		to[short] ++(2,0);
+		\draw (Q1.C) to[short] ++(1,0) node[ocirc, right]{};
+	\end{tikzpicture}
+%\captionof{figure}{Caption}
+  \end{minipage}
+
+	\textbf{Λύση}
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item Οι τιμές των αντιστάσεων θα είναι: \\
+		$R_{C1} = 5 \cdot 1,05 = \SI{5,25}{k\ohm}$ \\
+		$R_{C2} = 5 \cdot 0,95 = \SI{4,75}{k\ohm}$ \\
+		Για να γίνει αντιστάθμιση της εκτροπής θα πρέπει:
+		$R_{C1} + x( \SI{1}{k\ohm}) = R_{C2} +  (1 + x)( \SI{1}{k\ohm}) \Rightarrow$ \\
+		$5,25+x=4,75+1-x \Rightarrow x = 0,25$
+		\item
+		Η διαφορά 10\% μεταξύ των επιφανειών θα εμφανιστεί πρακτικά ως διαφορά μεταξύ των ρευμάτων συλλέκτη. Έτσι θεωρώντας ότι η διαφορά είναι $\pm$ 5\% (μοιράζεται εξίσου στα δύο εξαρτήματα), τα ρεύματα θα είναι: \\
+		 $I_{C1} = \frac{I}{2} \cdot 1,05 = \SI{1,05}{m\ampere}$ \\
+		 $I_{C2} = \frac{I}{2} \cdot 0,95 = \SI{0,95}{m\ampere}$ \\
+		 Για αντιστάθμιση της εκτροπής θα πρέπει οι πτώσεις τάσης στους δύο κλάδους συλλέκτη να είναι ίσες: $1,05(x+5) = 0,95((1-x)+5) \Rightarrow x = 0,225$
+	\end{enumerate}
+	
+	\subsection{Άσκηση}
+	\label{sec:D.S17S15I14}
+	
+	Στο διαφορικό ενισχυτή του σχήματος (α) στην θέση της πηγής $I$ χρησιμοποιούμε α) απλό καθρέπτη ρεύματος, οπότε $R_{SS}=r_o$ , β) καθρέπτη Wilson όπως στο σχήμα β, οπότε $R_{SS} = g_{m7}r_{o7}r_{o8}$. Αν όλα τα τρανζίστορ έχουν την ίδια τιμή για τα $V_A$ και $k^{'} \frac{W}{L}$, να δείξετε ότι στην περίπτωση (α) $CMRR=2{(V_A / V_{OV})}^2$ ενώ για την (β) θα είναι $CMRR=2\sqrt{2}{(V_A / V_{OV})}^3$. Η $V_{OV}$ είναι η τάση υπεροδήγησης που αντιστοιχεί σε ρεύμα $I_D = I / 2$. Για τιμές $k^{'} W /L = \SI{10}{\ampere/\volt ^2 }$, $I = \SI{1}{m\ampere}$ και $|V_A|=\SI{20}{\volt}$ να υπολογιστεί ο λόγος απόρριψης κοινού σήματος $CMRR$ για τις δύο περιπτώσεις.
+	
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\begin{circuitikz} [american]
+			\vspace{50pt}
+			\draw
+			(0,0) node[pmos] (Q4) {Q4}
+			(Q4.G) node[pmos, xscale=-1, anchor=G] (Q3) {}
+			(Q3) node[left, inner sep=0pt] {Q3}
+			(Q3.D) node[nmos, anchor=D] (Q1) {Q1}
+			(Q4.D) node[nmos, xscale=-1, anchor=D] (Q2)
+			{\scalebox{-1}[1]{Q2}};
+			\draw (Q3.S) -- ($(Q3.S)!0.5!(Q4.S)$) 
+			node[vee, rotate=180, xscale=1](vee){\scalebox{-1}[-1]{$V_{DD}$}} -- (Q4.S);
+			\draw (Q1.S) -- ($(Q1.S)!0.5!(Q2.S)$) to[isource] ++(0,-2);
+			\draw (Q2.S) -- ($(Q1.S)!0.5!(Q2.S)$);
+			\draw ($(Q1.S)!0.5!(Q2.S)+ (0,-2)$) node[vss, xscale=1](vss){\scalebox{1}[1]{$-V_{SS}$}};
+			\draw (Q2.D) to[short] ++(1,0) node[ocirc]{} node[above](vo){$v_o$};
+			\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+			\draw (Q2.G) node[ocirc]{} node[above](vo){$v_{G2}$};
+			\draw (Q1.G) node[ocirc]{} node[above](vo){$v_{G1}$};
+			
+			\draw ($(current bounding box.south) + (0,-0.4)$) node[below] {Σχήμα α};
+			%\useasboundingbox (-3,-3);
+			%\node[fit=(current bounding box),inner sep=2mm]{};
+			%\path
+			%([shift={(-1cm,-1cm)}]current bounding box.south west)
+			%([shift={( -1cm, -1cm)}]current bounding box.north east);
+		\end{circuitikz}
+		%\caption{Subcaption of the left diagram.}
+		%\label{Fig:SubLeft}
+	\end{subfigure}%
+	~ 
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\begin{circuitikz} [american]
+			\vspace{50pt}
+			\draw (0,0) node[nmos] (Q7) {Q7}
+			(Q7.G) node[nmos, xscale=-1, anchor=G] (Q8) {\scalebox{-1}[1]{Q8}}
+			%(Q8) node[left, inner sep=0pt] {Q8}
+			(Q8.S) node[nmos, anchor=D, xscale=-1] (Q5) {\scalebox{-1}[1]{Q5}}
+			(Q7.S) node[nmos, anchor=D] (Q6) {\scalebox{1}[1]{Q6}};
+			\draw (Q8.G) node[circ] {} |- (Q8.D) node[circ] {};
+			\draw [densely dashed] (Q8.D) to[short, i<=$I$] ++ (0,1);
+			%\pgfextra{\ctikzset{style={/tikz/european currents}}};
+			\draw [densely dashed] (Q7.D) to[short] ++ (0,1);
+			\draw ($ (Q7.D) + (0,-0.3)$) to[open, f_<=$i$, european] ++ (0,1);
+			%\draw[<-, color=red] ($(Q7.D) + (0.5,-0.5)$) |- ($(Q7.D) + (1.5,0)$);
+			\draw[<-] to[open] ($(Q7.D) + (0.5,-0.5)$) |- ($(Q7.D) + (1.5,0)$) node[below]{$R_{ss}$};
+			
+			\draw (Q5.S) -- ($(Q5.S)!0.5!(Q6.S)$) node[vss, xscale=1](vss){\scalebox{1}[1]{$-V_{SS}$}};
+			\draw (Q6.S) -- ($(Q5.S)!0.5!(Q6.S)$);
+			
+			\draw ($(current bounding box.south) + (-0.7,-0.4)$) node[below] {Σχήμα β};
+			%\useasboundingbox (-3,-3);
+			%\node[fit=(current bounding box),inner sep=2mm]{};
+			%\path
+			%([shift={(0cm,0cm)}]current bounding box.south west)
+			%([shift={( 0cm, 0cm)}]current bounding box.north east);
+		\end{circuitikz}
+	\end{subfigure}
+\end{figure}
+	\textbf{Λύση}
+	Για τον υπολογισμό του $CMRR$ ισχύει η σχέση: $CMRR=(g_mr_o)(g_mR_{SS})$, για την αντίσταση εξόδου $r_o=V_A / I_D$ και για την διαγωγιμότητα $g_m=(2I_D / V_{OV})$.
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item Για τον απλό καθρέπτη ρεύματος η αντίσταση εξόδου του $R_{SS}$ δίνεται από τον τύπο $r_o=V_A / I_D$ αλλά για το ρεύμα $I_D$ διπλάσιο από ότι στα τρανζίστορ του διαφορικού. Επομένως:
+		
+		\[
+		\begin{aligned}[t]
+		CMRR=[g_mr_o][g_mR_{SS}] &= \left[\left(\frac{2\cancel{I_D}}{V_{OV}}\right)\left(\frac{V_A}{\cancel{I_D}}\right)\right] \left[\left(\frac{2\cancel{I_D}}{V_{OV}}\right)\left(\frac{V_A}{2\cancel{I_D}}\right)\right] 
+		\\ &=  
+		\left(\frac{2I_D}{V_{OV}}\right)\left(\frac{V_A}{I_D}\right)
+		= 2 \left( \frac{V_A}{V_OV} \right)^2
+		 \end{aligned}
+		 \]
+		 \item Για τον τροποποιημένο καθρέπτη Wilson, η αντίσταση εξόδου του $R_{SS}$ δίνεται από τον τύπο $R_{SS}=g_{m7}r_{o7}r_{o8}$. Εδώ και πάλι πρέπει να υπολογιστούν οι $r_o$ για ρεύμα $I_D$ διπλάσιο από ότι στα τρανζίστορ του διαφορικού, αλλά επιπλέον πρέπει να υπολογιστεί και το $g_{m7}$ για διαφορετικό $V_{OVS}$ που αντιστοιχεί σε ρεύμα $I_D$ διαπλάσιο από ότι στα τρανζίστορ του διαφορικού.
+		 Έτσι θα έχουμε:
+		 \[V_{OVS} = \sqrt{\left(\frac{4I_D}{k^{'} W/L}\right)} = \sqrt2 \cdot  \overbrace{ \left( \sqrt{\left(\frac{2I_D}{k^{'} W/L}\right)}\right)}^{V_OV}   = \sqrt2 V_{OV}\]
+		 Αντικαθιστώντας στον τύπο: 
+		 \[
+		 \begin{aligned}[t]
+		 	CMRR=[g_mr_o][g_mR_{SS}] 
+		 	&= \left[\left(\frac{2I_D}{V_{OV}}\right)\left(\frac{V_A}{I_D}\right)\right] \cdot 
+		 	\left[\left(\frac{2I_D}{V_{OV}}\right)\left(\frac{4I_D}{\sqrt{2}V_{OV}}\right)\right] \cdot 
+		 	\left[\left(\frac{V_A}{2I_D}\right)\left(\frac{V_A}{2I_D}\right)\right]  \\
+		 	&= \left(\frac{4}{\sqrt{2}}\right) \left(\frac{V_A}{V_{OV}}\right)^3 = \left(2\sqrt{2}\right) \left(\frac{V_A}{V_{OV}}\right)
+		 \end{aligned}
+		 \]
+		 $\Rightarrow$ Με τις αριθμητικές τιμές που δίνονται είναι:
+		 \[V_{OV} = \sqrt{\left(\frac{2I_D}{k^{'} W/L}\right)} = \sqrt{\left(\frac{2\cdot \tfrac{1}{2}}{10}\right)} = \SI{0,316}{\volt}\] 
+		 
+	\end{enumerate}
+	Άρα για:
+	\begin{enumerate}[label=\noanw\alph*.]
+	\item 	\[CMRR= 2\left(\frac{V_A}{V_{OV}}\right)^2=2\left(\frac{20}{0,316}\right)^2=8011 \rightarrow 20\log(8011) = \SI{78}{\deci\bel} \]
+	\item 	\[CMRR= 2\sqrt{2}\left(\frac{20}{0,316}\right)^3=717090 \rightarrow 20\log(717090) = \SI{117}{\deci\bel} \]
+	\end{enumerate}
+
+
+
+
+
+
+\section{Ασκήσεις μονοπολικών τρανζίστορ (MOS)}
+
+	\subsection{Άσκηση}
+	\label{sec:HFLS.F13}
+	
+	Στον ενισχυτή του σχήματος είναι: $R_{sig} = \SI{10}{\kilo\ohm}$, $R_{B} = R_1 \| R_2 =  \SI{10}{\kilo\ohm}$, $r_x= \SI{100}{\ohm}$, $r_\pi= \SI{1}{\kilo\ohm}$, $\beta=100$, $R_E=\SI{1}{\kilo\ohm}$, $R_L=\SI{10}{\kilo\ohm}$. Ποια πρέπει να είναι η τιμή του λόγου $C_E/C_{C1}$ ώστε να εξισωθεί η συμβολή αυτών των δύο πυκωτλων στον καθορισμό της χαμηλής συχνότητας αποκοπής$f_l$; (Στον υπολογισμό να ληφθεί υπόψιν και η $r_x$)
+	\begin{figure}[H]
+	\begin{center}
+	\begin{tikzpicture}[american, scale=0.7]
+		\draw (0,0) node[npn](Q1){};
+		\draw (Q1.E) to[R, l^=$R_E$]
+		++(0,-3)  node[ground](GND){};
+		\draw (Q1.C) to[R, l_=$R_C$]
+		++(0,3) node[vcc](VCC){$V_{CC}$};
+		\draw (Q1.E) to[short] ++(3,0) to[short] ++(0,-1) to[C, l^=$C_E$]
+		++(0,-2) node[ground](GND){};
+		\node [coordinate] (in) at ($(Q1.B) + (-1,0)$) {};
+		\draw (Q1.B) to[short] (in);
+		\draw (in) to[short] ++(0,1) to[R , l_=$R_1$] ++(0,3) node[vcc](VCC){};
+		\draw (in) to[short] ++(0,-1) to[R , l^=$R_2$] ++(0,-3) node[ground](GND){};
+		\draw (in) to[short] ++(-1,0) to[C, l_=$C_{C1}$] ++(-1,0)
+		to[short] ++(-1,0) to[R, l_=$R_{sig}$] ++(-3,0) to[short] ++(0,-1)
+		to[vsource, l=$V_{sig}$, invert] ++(0,-3) node[ground](GND){};
+		\draw (Q1.C) to[short] ++(0.5,0) to[C, l^=$C_{C2}$] ++(5,0) to[short] ++(2,0) node[ocirc, right]{} node[above](vo){$v_{o}$} to[open] ++(-2,0) to[short] ++(0,-1) 
+		to[R, l^=$R_L$] ++(0,-3) node[ground](GND){};
+	\end{tikzpicture}
+	\end{center}
+	\end{figure}
+\textbf{Λύση}
+	Η ισοδύναμη αντίσταση $R_{C1}$ που  συμμετέχει με τον πυκνωτή $C_{C1}$ στον υπολογισμό του αντίστοιχου πόλου είναι: $R_{C1}  = R_{sig} + \left[R_B \| (r_{\pi} + r_x)\right] = 10 + \left[10\| (0,1+1)\right] = \SI{10,99}{\kilo\ohm}$.
+	
+	Η ισοδύναμη αντίσταση $R^{'}_E$ που συμμετέχει με τον πυκνωτή $C_E$ στον υπολογισμό του αντίστοιχου πόλου είναι:
+	\[R^{'}_E= R_{sig} + \left[\frac{r_x+r_{\pi}+\left(R_B\|R_{sig}\right)}{\beta+1}\right]=1\|\left[\frac{0,1+1+\left(10\|10\right)}{100+1}\right] = \SI{57}{\ohm}\]
+	Για να εξισωθεί η συμβολή δύο πυκνωτών στον καθορισμό της χαμηλής συχνότητας αποκοπής $f_{L}$ θα πρέπει να ισχύει: $C_ER^{'}_E=C_{C1}R_{C1}$.
+	
+	Οπότε θα πρέπει να είναι: \[\frac{C_E}{C_{C1}}=\frac{R_{C1}}{R^{'}_E} = \frac{10,99}{0,057} = 192,8\]
+
+
+
+\section{Ασκήσεις διπολικών τρανζίστορ}
+	
+	\subsection{Άσκηση}
+	\label{sec:HFLS.S17S13I15}
+	
+	Στον ενισχυτή ου σχήματος είναι: $R_{sig} = \SI{5}{\kilo\ohm}$, $R_{B} =   \SI{100}{\kilo\ohm}$, $R_{C} = \SI{8}{\kilo\ohm}$, $R_{L} = \SI{5}{\kilo\ohm}$, $V_A =   \SI{100}{\volt}$, $C_\mu =\SI{1}{\pico\farad}$, $\beta=100$, $r_x= \SI{50}{\ohm}$, $f_T= \SI{800}{\mega\hertz}$. Για $I=\SI{1}{\milli\ampere}$ το κέρδος στις μέσες συχνότητες $A_M$ είναι -39 και η συχνότητα αποκοπής $f_H$ με προσέγγιση χωρητικότητας Miller είναι $\SI{1}{\kilo\hertz}$. Για την μελέτη επίδρασης του ρεύματος πόλωσης έστω ότι το $I$ γίνεται $\SI{2}{\milli\ampere}$ και αλλάζουν μόνο οι $R_B=\SI{50}{\kilo\ohm}$ και $R_C = \SI{4}{\kilo\ohm}$. Να βρεθούν οι νέες τιμές των $A_M$ και $f_H$ και να συγκεκριθούν α. το γινόμενο κέρδους-εύρους ζώνης και β. η κατανάλωση ισχύος για τις δύο περιπτώσεις.
+		\begin{figure}[H]
+		\begin{center}
+			\begin{tikzpicture}[american, scale=0.7]
+				\draw (0,0) node[npn](Q1){};
+				\draw (Q1.E) to[isource, l=$I$]
+				++(0,-3)  node[ground](GND){};
+				\draw (Q1.C) to[R, l_=$R_C$]
+				++(0,3) node[vcc](VCC){$V_{CC}$};
+				\draw (Q1.E) to[short] ++(3,0) to[short] ++(0,-1) to[C, l^=$C_E$]
+				++(0,-2) node[ground](GND){};
+				\node [coordinate] (in) at ($(Q1.B) + (-1,0)$) {};
+				\draw (Q1.B) to[short] (in);
+				
+				\draw (in) to[short] ++(0,-1) to[R , l^=$R_B$] ++(0,-3) node[ground](GND){};
+				\draw (in) to[short] ++(-1,0) to[C, l_=$C_{C1}$] ++(-1,0)
+				to[short] ++(-1,0) to[R, l_=$R_{sig}$] ++(-3,0) to[short] ++(0,-1)
+				to[vsource, l=$V_{sig}$, invert] ++(0,-3) node[ground](GND){};
+				\draw (Q1.C) to[short] ++(0.5,0) to[C, l^=$C_{C2}$] ++(5,0) to[short] ++(2,0) node[ocirc, right]{} node[above](vo){$v_{o}$} to[open] ++(-2,0) to[short] ++(0,-1) 
+				to[R, l^=$R_L$] ++(0,-3) node[ground](GND){};
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}
+\textbf{Λύση}
+
+Για $I=\SI{2}{\milli\ampere}$ η διαγωγιμότητα $g_m$ θα είναι:
+
+%\begin{center}
+$g_m =\frac{2}{0,025} \SI[per-mode=symbol]{80}{\milli\ampere\per\volt} $
+
+$r_\pi = \beta / g_m =  \frac{100}{80} = \SI{1,25}{\kilo\ohm}$
+
+$r_o = \frac{V_A}{I_C}= \frac{100}{2} = \SI{50}{\kilo\ohm}$
+
+$C_\pi + C_\mu = g_m/w_T  = 80\cdot10^{-3} / (2\pi800) = \SI{15,9}{\pico\farad} \Rightarrow$
+
+$C_\pi=15,9-C_\mu= \SI{14,9}{\pico\farad}$
+%\end{center}
+
+Ο πυκνωτής του άκρου που πηγαίνει στη γείωση καθορίζει το είδος του ενισχυτή, π.χ. εδώ έχω $C_E \rightarrow$ γείωση,, άρα κοινού εκπομπού.
+
+Το κέρδος $A_M$ είναι:
+\[A_M= - \frac{R_B}{R_B+R_{sig}} \frac{r_\pi}{r_\pi + r_x + (R_B\| R_{sig})} g_mR^{'}_L\]
+όπου $R^{'}_L= r_o\| R_C\|R_L$.
+
+Αντικαθιστώντας τις τιμές προκύπτει $R^{'}_L = 50\|4\|5 = \SI{2,1}{\kilo\ohm}$ και
+\[A_M = - \frac{50 \cdot1,25\cdot80\cdot2,1}{\left[(50+5)(1,25+0,05+ (50\|5))\right]} = -  \SI[per-mode=symbol]{32,66}{\volt\per\volt} 
+\]
+Για τον υπολογισμό της συχνότητας $f_H$ υπολογίζονται οι τιμές των $C_{in} $ και $R^{'}_{sig}$ από τους σχετικούς τύπους: 
+
+$C_{in} = 14,9 +1(1+168) = \SI{183,9}{\pico\farad}$
+   (όπου 168=$g_mR^{'}_L$) 
+ 
+ $R^{'}_{sig} = 1,25 \| \left(50+(50\|5)\right) =  \SI{0,983}{\kilo\ohm}$
+ 
+ Η συνότητα $f_H$ είναι: \[
+ f_H = \frac{1}{2\pi \cdot 183,9 \cdot 10^{-12} \cdot 983} = \SI{880}{\kilo\hertz}
+ \]
+ \begin{enumerate}[label=\noanw\alph*.]
+ 	\item 
+ 	Το γινόμενο κέρδους-εύρους ζώνης ήταν αρχικά $39\cdot754 = 29,4\cdot10^6$  και μετά την αλλαγή είναι $3,66\cdot 880=28,7\cdot10^6$ δηλαδή παρέμεινε σχεδόν σταθερό. Με την αλλαγή επιτεύχθηκε μεγαλύτερο εύρος λειτουργίας σε βάρος του κέρδους.
+ 	\item
+ 	Με δεδομένο ότι η τάση τροφοδοσίας είναι η ίδια, ο διπλασιασμός του ρεύματος πόλωσης συνεπάγεται και διπλασιασμό της καταναλισκόμενης ισχύος. ($P=I\cdot V_{supply}$).
+ \end{enumerate}
+
+
+
+\section{Πολυβάθμιοι ενισχυτές}
+
+	\subsection{Άσκηση}
+	\label{sec:Poly.I14,F14,F13}
+
+	Για τον ενισχυτή του σχήματος τα τρνζίστορ έχουν $L=\SI{0,8}{\micro\metre}$ και $V^{'}_{An} = \SI[per-mode=symbol]{25}{\volt\per\micro\metre}$, $\left| V^{'}_{A\rho}  \right| = \SI[per-mode=symbol]{20}{\volt\per\micro\metre}$. Αν για όλα τα τρανζίστορ η τάση υπεροδήγησης είναι $V_{OV} = \SI{0,25}{\volt}$ και το δεύτερο στάδιο πολώνεται στα $\SI{0,4}{\milli\ampere}$, να υπολογιστούν τα κέρδη $A_1$, $A_2$ το κέρδος τάσης ανοικτού βρόχου $A_o$ και η αντίσταση εξόδου $R_o$ του ενισχυτή. Πόση θα είναι η αντίσταση εξόδου ενός ενισχυτή τάσης μοναδικού κέρδους που χρησιμοποιεί αυτόν τον τελεστικό; (Υπενθυμίζεται ότι ισχύει $(W/L)_6/(W/L)_4 = 2\cdot(W/L)_7/(W/L)_5$ )
+		
+	\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture} [american]
+	\vspace{0pt}
+	\draw
+	(0,0) node[nmos] (Q4) {Q4}
+	(Q4.G) node[nmos, xscale=-1, anchor=G] (Q3) {\scalebox{-1}[1]{Q3}};
+	\draw (Q3.D) to[short] ++(0,.5) node[pmos, anchor=D] (Q1) {Q1};
+	\draw (Q4.D) to[short] ++(0,.5) node[pmos, anchor=D, xscale=-1] (Q2) {\scalebox{-1}[1]{Q2}};
+	\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+	\draw (Q1.S) -- (Q2.S);
+	%\pgfextra{\ctikzset{style={/tikz/european currents}}};
+	\draw ($(Q1.S)!0.5!(Q2.S)$) to[short, f_<=I, *-] ++ (0,1) node[pmos, anchor=D](Q5) {Q5};
+	\draw (Q5.G) to[short] ++ (-2,0) 
+	node[pmos, xscale=-1, anchor=G](Q8) {\scalebox{-1}[1]{Q8}};
+	\draw (Q8.D) to[isource, l_=$I_{REF}$] ++(0,-5.5) node[vee](VEE){};
+	\draw (Q3.S) node[vee](VEE){$-V_{SS}$};
+	\draw (Q4.S) node[vee](VEE){};
+	\draw (Q4.D) to[short, *-] ++(1,0) to[short] ++(0,-1)
+	to[short] ++(1,0) node[nmos, anchor=G](Q6) {Q6};
+	\draw (Q2.D) to[short, *-] ++(1.5,0) to[C, l=$C_C$] ++ (1,0)
+	to[short, -*] (Q6.D |- Q2.D);
+	\draw (Q6.D) to[short] ++(0,3.5) node[pmos, anchor=D](Q7) {$Q7$};
+	\draw (Q1.G) node[ocirc]{} node[above](minus){$-$};
+	\draw (Q2.G) node[ocirc]{} node[above](plus){$+$};
+	\draw (Q6.D) ++ (0,2) to[short, *-] ++(1,0) 
+	node[ocirc]{} node[above](vo){$v_o$};
+	\draw (Q7.G) to[short] ++(-2,0) to[short] ++(0,-1)
+	to[crossing] ($ (Q5.G) -(0,1)$) to[short] ++(-0.4,0) to[short, -*] ++(0,1);
+	\draw (Q8.G) node[circ] {} |- (Q8.D) node[circ] {};
+	\draw (Q6.S) node[vee](VEE){};
+	\draw (Q5.S) node[vcc](VCC){$+V_{DD}$};
+	\draw (Q7.S) node[vcc](VCC){};
+	\draw (Q8.S) node[vcc](VCC){};
+\end{tikzpicture}
+	\end{center}
+	\end{figure}
+
+	\textbf{Λύση}
+	
+	Υπολογίζεται αρχικά  η τάση Early των τρανζίστορ:
+	
+	$V_{An} = V^{'}_{An} L = 25\cdot0,8 = \SI{20}{\volt}$
+	
+	$\left| V_{A\rho}  \right| = \left| V^{'}_{A\rho}  \right| L =20\cdot0,8 = \SI{16}{\volt}$
+	
+	Το κέρδος της πρώτης βαθμίδας είναι $A_1=g_{m1} (r_{o2}\|r_{o4})$, ενώ της δεύτερης   $A_2=g_{m6} (r_{o6}\|r_{o7})$.
+	Τα ρεύματα των $Q_6$, $Q_7$ είναι $\SI{0,4}{\milli\ampere}$ οπότε:
+	
+	$r_{o6} = 20 / 0,4 = \SI{50}{\kilo\ohm}$
+	
+	$r_{o7} = 16 / 0,4 = \SI{40}{\kilo\ohm}$
+	
+	$g_{m6} = 2 \cdot 0,4 / 0,25 = \SI[per-mode=symbol]{3,2}{\milli\ampere\per\volt}$
+	
+	Για την αποφυγή συστηματικού σφάλματος απόκλισης της εξόδου στο συνεχές (dc) πρέπει να
+	ισχύει η δοθείσα σχέση. Από αυτήν φαίνεται ότι όταν τα $W/L$ των $Q_5$, $Q_7$ είναι ίσα, το $W/L$ του $Q_6$ πρέπει να είναι το διπλάσιο από το $W/L$ του $Q_4$. Επομένως, τα ρεύματα των $Q_2$, $Q_4$, (και των $Q_1$, $Q_3$) είναι το μισό του ρεύματος της δεύτερης βαθμίδας, δηλ. $\SI{0,4}{\milli\ampere}$ οπότε: 
+	
+	$r_{o4} = 20 / 0,2 = \SI{100}{\kilo\ohm}$
+	
+	$r_{o2} = 16 / 0,2 = \SI{80}{\kilo\ohm}$
+	
+	$g_{m1} = 2 \cdot 0,2 / 0,25 = \SI[per-mode=symbol]{1,6}{\milli\ampere\per\volt}$
+	
+	Επομένως το συνολικό κέρδος είναι:
+	
+	$A_o=A_1A_2=1,6\cdot\left(80\|100\right) \cdot 3,2 \left(50\|40\right) =  \SI[per-mode=symbol]{5056,8}{\volt\per\volt}$
+	
+	Σε ενισχυτή μοναδιαίου κέρδους ισχύει:
+	
+	$A_f=A_o / \left(1+A_o\beta\right) = 5056,8 / \left(1+5056,8 \beta\right) = 1 \Rightarrow \left(1+A_o\beta\right) = 5056,8$
+	
+	Επομένως η αντίσταση εξόδου $R_{of}$ θα είναι:
+	
+	$R_{of} = R_o / \left(1+A_o\beta\right) = \left(r_{o6}\|r_{o7}\right) / \left(1+A_o\beta\right) = \left(50\|40\right) / 5056,8 = \SI{4,4}{\ohm}$
+	
+	
+\section{Ανάδραση}
+
+	\subsection{Άσκηση}
+	
+	Να σχεδιαστεί ενισχυτής με ανάδραση που να έχει κέρδος κλειστού βρόχου \SI[per-mode=symbol]{100}{\volt\per\volt} και να έχει σχετική "αναισθησία" σε μεταβολές κέρδους του βασικού ενισχυτή. Συγκεκριμένα για μείωση του κέρδους $A$ του βασικού ενισχυτή στο ένα δέκατο της
+αρχικής τιμής, το κέρδος κλειστού βρόχου να γίνεται $99$. Ποιο είναι το απαιτούμενο
+κέρδος βρόχου; Ποια η απαιτούμενη ονομαστική τιμή για το $A$; Τι τιμή πρέπει να
+χρησιμοποιηθεί για το $\beta$; Αν το $A$ γίνει δεκαπλάσιο ή άπειρο, πόσο γίνεται το κέρδος κλειστού βρόχου;
+	
+	\textbf{Λύση}
+	
+	Το κέρδος κλειστού βρόχου είναι $A_f= A /  \left(1+A\beta\right)$ και για την μεταβολή του ισχύει:
+	
+	\[\frac{\mathrm{d} A_f}{A_f} = \frac{1}{1+ A\beta} \frac{\mathrm{d} A}{A}\]
+	
+	Άρα, θα πρέπει: $0,01 = \frac{1}{\left(1+A\beta\right)}\cdot 0,9 \Rightarrow \left(1+A\beta\right) = 90 \Rightarrow A\beta=89$ (κέρδος βρόχου)
+	
+	Επομένως 
+	
+	\[A_f=\frac{A}{\left(1+A\beta\right)} \Rightarrow 100 = \frac{A}{\left(1+89\right)} \Rightarrow A = 9000 \qquad \text{και} \qquad \beta = \frac{89}{9000} = 9,9\cdot 10^{-3}\] 
+
+	Για 10πλάσιο κέρδος $A$ και ίδια τιμή $\beta$, το κέρδος κλειστού βρόχου είναι:
+	
+	\[A_f = \frac{9000}{1+9000\cdot \frac{89}{9000}} = 101,01\]
+	
+	Για 100πλάσιο κέρδος $A$ και ίδια τιμή $\beta$, το κέρδος κλειστού βρόχου είναι:
+	
+	\[A_f = \frac{900000}{1+900000\cdot \frac{89}{9000}} = 101,11\]
+	
+	Για $A\rightarrow \infty$ προκύπτει ότι το $A_f \rightarrow \left(\frac{1}{\beta}\right) = \frac{9000}{89} = 101,12$
+	
+	\subsection{Άσκηση}
+	\label{sec:Anadrasi.xatzo.paromoia}
+	
+	Στον ενισχυτή του σχήματος είναι $\left|V_t\right| = \SI{1}{\volt}$, 
+	$k^{'} \frac{W}{L}= \SI[per-mode=symbol]{1}{\milli\ampere\per\volt^2}$, $h_{fe}=100$, $V_{BE}=\SI{0,7}{\volt}$ και η τάση Early $V_A$ είναι $\SI{100}{\volt}$ για όλα τα τρανζίστορ (και εκείνα των πηγών ρεύματος πόλωσης). H πηγή σήματος δεν έχει συνεχή συνιστώσα. Να υπολογιστούν οι dc τάσεις στην έξοδο και στην βάση του $Q_3$ καθώς και οι τιμές των: $A$, $\beta$, $A_f$, $R_{in}$, $R_{out}$.
+	
+\begin{center}
+	\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[nmos,xscale=-1](Q2){\scalebox{-1}[1]{$Q_2$}};
+		\draw (Q2.S) to[short] ++(0,-1)
+		to[short] ++ (-2,0)
+		to[isource, l= \SI{1}{m\ampere}] ++(0,-3) node[vee](vee){};
+		\draw (Q2.D) to[short] ++(0,0.5) to[isource, l_=\SI{0,5}{m\ampere}, invert] ++(0,3) node[vcc](vcc){};
+		\draw (-4,0) node[nmos](Q1){$Q_1$};
+		\draw (Q1.G) to[R, l_={$R_s=\SI{100}{\kilo\ohm}$}] ++(-4,0)
+		to[vsource, invert, l_= $V_s$] ++(0,-3) node[ground]{};
+		\draw (Q1.D) to[short] ++(0,1) node[vcc](vcc){};
+		\draw (Q2.G) to[short, -*] ++(1,0) to[R,l_=$\SI{100}{\kilo\ohm}$] ++(0,-3) node[ground]{} ++(0,3) to[R, l^=$\SI{900}{\kilo\ohm}$, -*] ++(3.5,0) to[isource, l_=\SI{5}{m\ampere}, name= is] ++(0,-3.25) node[vee](vee){} ++(0,3.25) to[short] ++(3,0)
+		to[R,  l^={$R_L=\SI{2}{\kilo\ohm}$}] ++(0,-3) node[ground]{} ++(0,3) to[short, -o] ++(2,0) node[right]{$V_o$};
+		\draw (is.center |- Q2.G) to[short] ++(0,0.6) node[npn, anchor=E](Q3){$Q_3$};
+		\draw (Q3.B) to[short, -*] (Q2.D |- Q3.B);
+		\draw (Q3.C) to[short] ++(0,0.5) node[vcc]{};
+		\draw (Q1.S) to[short] ++(0,-1)
+		to[short] ++(2,0);
+		\draw[->] to[open] ($ (Q1)  + (-2.7,-4.5) $) |- ($(Q1)  + (-1.7,-0.7) $);
+		\draw ($ (Q1)  + (-2.7,-4.5) $) node[below]{$R_{in}$};
+		\draw[->]  to[open] ($ (Q1)  + (12.4,-4.5) $) |- ($(Q1)  + (11.4,-0.7) $);
+		\draw ($ (Q1)  + (12.4,-4.5) $) node[below]{$R_{out}$};
+	\end{tikzpicture}
+\end{center}
+		
+	\textbf{Λύση}
+	
+	Εφόσον $V_{G1} = 0 = V_{G2}$ θα είναι και $V_{E3} = V_o = \SI{0}{\volt}$ και $V_{B3} = \SI{0,7}{\volt}$ 
+	
+	Οι διαγωγιμότητες θα $g_{m1}$ και $g_{m2}$ είναι:
+	
+	$g_{m1} = g_{m2}$ = $\sqrt{2kI_D} = \sqrt{2\cdot1\cdot5} = \SI[per-mode=symbol]{1}{\milli\ampere\per\volt}$
+	
+	Η αντίσταση εξόδου των τρανζίστορ $Q1$, $Q2$ είναι $r_o= V_A / I= 100 / 0,5 = \SI{200}{\kilo\ohm}$
+	
+	Ίδια τιμή θεωρούμε ότι έχει και η αντίσταση εξόδου της πηγής ρεύματος πόλωσης των $\SI{0,5}{\milli\ampere}$. Η αντίσταση $r_{e3} (\equiv r_{d3})$ του $Q_3$ είναι $r_{d3} = V_T / 5 = 25/5 = \SI{5}{\ohm}$. Η αντίσταση εξόδου του $Q3$ είναι $r{o3} =V_A/I = 100/5= \SI{20}{\kilo\ohm}$.
+	Ιδια τιμή θεωρούμε ότι έχει και
+η αντίσταση εξόδου της πηγής ρεύματος πόλωσης των $\SI{5}{\milli\ampere}$. Το κύκλωμα είναι ενισχυτής με ανάδραση σειράς-παράλληλα (τάσης σειράς), οπότε για το
+ισοδύναμο μπορεί να θεωρηθεί ότι το δικτύωμα ανάδρασης($\SI{100}{\kilo\ohm}$, $\SI{900}{\kilo\ohm}$), διακόπτεται και η αντίσταση των $\SI{900}{\kilo\ohm}$ εμφανίζεται παράλληλα με την $\SI{100}{\kilo\ohm}$ στην πύλη του $Q2$ και
+σε σειρά με την $\SI{100}{\kilo\ohm}$ στον εκπομπό του $Q3$. Ετσι, η αντίσταση εξόδου $R_o$ θα είναι: 
+%202 -> 20/2
+	$R_o = \SI{1}{\mega\ohm} \| \SI{2}{\kilo\ohm} \| \left( \SI[parse-numbers=false]{20/2}{\kilo\ohm} \right) \| \left[r_{e3} + \SI{100}{\kilo\ohm} \left(h_{fe} + 1\right)\right] = \SI{1,6667}{\kilo\ohm} \| \left[0,005 + \SI{0,990}{\kilo\ohm}\right] = \SI{624}{\ohm}$.
+	
+	Η αντίσταση εισόδου $R_i$ θεωρείται άπειρη (πύλη MOS). Το κέρδος $A$ του ενισχυτή (χωρίς ανάδραση) είναι: $A= A_1 A_2$, όπου το κέρδος $A_1$ είναι του διαφορικού με αντίσταση στον κόμβο της εκροής $R= \left(200/2\right) \| \left[\left(h_{fe} +1\right) \left(r_{e3} + \SI{1,6667}{\kilo\ohm}\right)\right] = \SI{63}{\kilo\ohm}$ και το $A_2$ είναι το κέρδος της βαθμίδας κοινού συλλέκτη. Άρα: $A=\left(1/2\right) g_{m1} R\left[1,6667 / \left( r_{e3} +\SI{1,6667}{\kilo\ohm}\right)\right] = 0,5\cdot 1\cdot 63 \cdot 0,997 = \SI[per-mode=symbol]{31,4}{\volt\per\volt}$
+	
+	Ο συντελεστής ανάδρασης $\beta$ είναι $\beta= 100/ \left(100+900\right) = 0,1$, οπότε το κέρδος κλειστού βρόχου είναι: \[A_f=\frac{A}{\left(1+A\beta\right)} = \frac{31,4}{\left(1+31,4\cdot 0,1\right)} = \SI[per-mode=symbol]{7,58}{\volt\per\volt}\]
+	Η αντίσταση εξόδου με την ανάδραση $R_{of}$ είναι:
+	\[R_{of}= \frac{R_{o} }{\left(1+A\beta\right)}=\frac{624}{4,14} = \SI{150,7}{\ohm}\]
+	
+	Οπότε αφού ισχύει $R_{of} = R_{out} \| R_L $, προκύπτει ότι
+$R_{out} =\SI{163}{\ohm}$.
+	
+	Η αντίσταση $R_{if}$ θεωρείται επίσης άπειρη, όπως και η $R_in$.
+	
+
+
+\section{Ταλαντωτές – Γεννήτριες σήματος}
+
+	\subsection{Άσκηση}
+	\label{sec:oscil.S17,S15}
+
+	Για το κύκλωμα του σχήματος να βρεθεί το κέρδος βρόχου $L(j\omega)$ ή $L(s)$, η συχνότητα
+	ταλαντώσεων (συχνότητα για μηδενική φάση βρόχου) και η συνθήκη κέρδους (λόγος
+	$R_2/R_1$) για την έναρξη ταλαντώσεων.
+	
+\begin{center}
+	\begin{tikzpicture}[american, scale = 0.7 ]
+		\draw (0,0) node[op amp](opamp){}
+		(opamp.-) to[short] ++(-1,0) to[short] ++(0,2) to[R, l_=$R_1$, *-] ++(-3,0) node[ground]{} ++(3,0) to[R, l^=$R_2$] ++(4,0) to[short] ++(1,0) coordinate(tmp1)
+		to[short, -*] (opamp.out -| tmp1) to[short] ++(0,-3) to[C, l_=$C$] ++(-2,0) to[short] ++(0,-0.5) to[R, l^=$R$] ++(0,-1.5) node[ground]{} ++(0,2) coordinate(tmp2) node[above]{$v_1$} to[R, l_=$R$, *-*] ($ (tmp2 -| opamp.+) + (-1,0) $) node[left]{$v_{+}$};
+		%\draw($ (tmp2 -| opamp.+) + (-1,0) $) node {$o$};
+		\draw (opamp.out) to[short, -o] ++(1.5,0);
+		\draw (opamp.+) to[short] ++(-1,0) to[short] ($ (tmp2 -| opamp.+) + (-1,0) $) to[short] ++(0,-0.5) to[C, l_=$C$] ++(0,-1.5) node[ground]{};
+	\end{tikzpicture}
+\end{center}
+
+	\textbf{Λύση}
+	
+	Το κέρδος τάσης του ενισχυτή θεωρώντας την θετική είσοδο ως είσοδο του κυκλώματος, (μη αναστρέφουσα συνδεσμολογία) 
+θα είναι $A=1+\left(R_2/R_1\right)$.
+O συντελεστής ανάδρασης $\beta(s) = v_+ / v_o $ θα υπολογιστεί από το δίκτυο θετικής ανάδρασης των $R$ και $C$. Στο κύκλωμα αυτό θεωρούμε σαν είσοδο την $v_o$ και σαν έξοδο την $v_+$. Το ρεύμα εισόδου του τελεστικού θεωρείται μηδέν, οπότε:
+\[\frac{\left(v_1-v_+\right)}{R} = s C v_+ \Rightarrow v_1 = v_+ \left(1+sCR\right)\]
+Από το άθροισμα ρευμάτων στον κόμβο $v_1$ προκύπτει:
+\[\frac{v_1}{R } + s C\left(v_1 - v_o\right) + s C v_+ = 0 \Rightarrow\]
+
+$v_+ ( 1+ sCR) + sCR v_+ ( 1+ sCR) - v_o sCR + v_+ sCR = 0 \Rightarrow$
+
+$v_+ ( 1+ sCR+ sCR+ s^2 C^2 R^2 + s CR)  = v_o sCR  \Rightarrow$
+\[\begin{aligned}
+	\beta(s) &= \frac{v_+}{v_o}  = \frac{sCR}{(1+3sCR+ s^2C^2R^2 )} = \frac{1}{(3 + sCR + \frac{1}{sCR})} \Rightarrow \\
+	\beta(j\omega) &= \frac{1}{\left[3 + j(\omega CR - 1 / \omega CR)\right]}\end{aligned}\]
+\[\text{Για τον μηδενισμό της φάσης πρέπει }\omega CR = \frac{1}{\omega CR } \Rightarrow \omega_o = \frac{1}{CR} \text{.}\]
+
+Για την συχνότητα $\omega_o$ θα είναι $\left|\beta(\omega_o)\right| = 1/3$. 
+
+Για την $\notate{\text{ύπαρξη ταλαντώσεων }}{1}{\text{Κριτήριο Barkhausen}}$ θα πρέπει:
+\[A\beta = 1\text{ και πρακτικά θα πρέπει }\begin{aligned}
+	& A\beta \geq 1 \\ &\Rightarrow \left[1+\frac{R_2}{R_1}\right]\left(\frac{1}{3}\right) \geq 1 \\ & \Rightarrow \frac{R_2}{R_1} \geq 2
+\end{aligned}\]
+Η γενική συνάρτηση του κέρδους βρόχου είναι:
+\[L(s) = A \beta(s) = \frac{ 1+ (R_2/R_1)}{3 + sCR + (1 / sCR)}\]
+\[L(j\omega) = A \beta(j\omega) = \frac{ 1+ (R_2/R_1)}{3 + j(\omega CR - 1 / \omega CR )} \]
+	
+	
+
+\section{Τελεστικός ενισχυτής}
+
+	\subsection{Άσκηση}
+	
+	Να υπολογιστεί η αντίσταση $R_3$ στο κύκλωμα του σχήματος (στάδιο εισόδου του 741)
+έτσι ώστε όταν τα ρεύματα βάσης δεν αγνοούνται, τα ρεύματα συλλέκτη των $Q_5$, $Q_6$,
+$Q_7$ να γίνονται ίσα. Να βρεθούν οι τιμές αυτών των ρευμάτων. Θεωρήστε ότι $I_{C3} = \SI{9,4}{\micro\ampere}$, $\beta=200$, $I_S=10^{-14}\SI{}{\ampere}$, $R_1=R_2= \SI{1}{\kilo\ohm} $ και ότι η $V_{EE}$ είναι μηδέν.
+	
+	\begin{center}
+	\begin{tikzpicture} [american]
+		\vspace{0pt}
+		\draw (0,0) node[npn] (Q6) {Q6}
+		(Q6.G) to [short] ++(-2.5,0)
+		node[npn, xscale=-1, anchor=G] (Q5) {\scalebox{-1}[1]{Q5}};
+		\draw ($(Q6.B)!0.5!(Q5.B)$) to[short] ++(0,-1) to[R, l_=$R_3$] ++(0,-2) node[vee]{};
+		\draw (Q6.E) to[R, l_=$R_2$] ++(0,-2) node[vee]{};
+		\draw (Q5.E) to[R, l_=$R_1$] ++(0,-2) node[vee]{};
+		\draw (Q5.C) to[short, f^<=$I$] ++(0,0.5) to[short] ++(0,1) edge[dashed] ++(0,1);
+		\draw ($(Q6.B)!0.5!(Q5.B)$) to[short] ++(0,1) node[npn, anchor=E](Q7){Q7};
+		\draw (Q7.G) to[short, -*] (Q5.C |- Q7.B) node[left]{$A$};
+		\draw (Q7.C) node[vcc]{};
+		
+		%hack-ish!!!
+		\draw($ (Q7.C) + (0.55,-0.35) $) to[open, f_<=$I$] ++(0,0.3);
+		
+		\draw (Q6.C) to[short, f_<=$I$] ++(0,0.8) to[short] ++(0,0.7) edge[dashed] ++(0,1);
+		\draw ($ (Q6) + (3,2) $) node[npn] (Q) {Q}
+		(Q.B) to[short, -*] (Q6.C |- Q.B)
+		(Q.C) edge[dashed] ++(0,0.5)
+		(Q.E) edge[dashed] ++(0,-1);
+	\end{tikzpicture}
+	\end{center}
+
+	\textbf{Λύση}
+	
+	Για τα τρανζίστορ το $\alpha$ είναι: $\alpha = \beta / \left(\beta + 1\right) = 0.995$.
+	
+	Για τα ρεύματα στον κόμβο Α θα είναι: $I + I/\beta = \SI{9,4}{\micro\ampere} \Rightarrow I= \SI{9,353}{\micro\ampere}$.
+	Για τα ρεύματα στον κόμβο των βάσεων των $Q_5$,$Q_6$ θα είναι:
+	
+	$I_{R3} = I / a - 2I/\beta = \SI{9,307}{\micro\ampere}$.
+	
+	Η τάση στον κόμβο αυτόν είναι:
+	
+	$V_{B5} = I_{R3} \cdot R_3 = R_1·I/\alpha + V_{BE5}$
+	
+	H τάση $V_{BE5}$ υπολογίζεται ως: $V_{BE5}= V_T ln(I/I_S) = 25 ln(9.353·10^{-6}/10^{-14}) =  \SI{516,4}{\milli\volt}.$
+	
+	Άρα $V_{B5} = R_1·I/a + V_{BE5}= \SI{525,8}{\milli\volt}$, οπότε υπολογίζεται και η τιμή της $R_3$:
+	
+	$R3 = V_{B5} / I_{R3} = 525.8 / 9.307 = \SI{56,5}{\kilo\ohm}.$
+	
+	\subsection{Άσκηση}
+	
+	Χρησιμοποιώντας δύο ιδανικούς τελεστικούς ενισχυτές και αντιστάσεις να υλοποιηθεί
+	η παρακάτω συνάρτηση εξόδου $v_o$:
+	\[v_o = 2v_1 + v_2 - 4v_3 - 3v_4\]
+	
+	\textbf{Λύση}
+	
+	Για το παρακάτω κύκλωμα με διπλό αθροιστή με βάρη ώστε να έχουμε άθροιση σημάτων
+	με αντίθετα πρόσημα, ισχύει ως γνωστόν η σχέση:
+	\[v_o = v_1 \left(\frac{R_a}{R_1}\right) \left(\frac{R_c}{R_b}\right) + v_2 \left(\frac{R_a}{R_2}\right) \left(\frac{R_c}{R_b}\right) - v_3 \left(\frac{R_c}{R_3}\right) - v_4\left(\frac{R_c}{R_4}\right) \]
+	
+		\begin{center}
+		\begin{tikzpicture} [american]
+			\vspace{0pt}
+			\draw (0,0) node[op amp] (opamp2) {}
+			(opamp2.-) to[short] ++(-1,0) to[R, l_ = $R_b$, -*] ++(-2,0) to[short] ++(-0.5,0) node[op amp, anchor=out] (opamp1) {};
+			\draw (opamp2.out) to[short, -*] ++(0.5,0)
+			to[short, -o] ++ (0.5,0) node[right]{$v_o$} 
+			++(-0.5,0) to[short] ++(0,2) to[R, l_=$R_c$] ++(-3.2,0) coordinate(tmp1)
+			to[short, -*] (tmp1 |- opamp2.-);
+			\draw (opamp2.+) to[short] (tmp1 |- opamp2.+) 
+			to[short] ++(0,-0.6) node[ground]{};
+			\draw (tmp1 |- opamp2.-) to[short] ++(-0.5,-1) to[R, l_=$R_3$, -o] ($( opamp1.out |- tmp1) + (0.5,-2.5) $) node[left]{$v_3$};
+			\draw (tmp1 |- opamp2.-) to[short] ++(-0.5,-2) to[R, l_=$R_4$, -o] ($( opamp1.out |- tmp1) + (0.5,-3.5) $) node[left]{$v_4$};
+			\draw (opamp1.out) to[short, -*] ++(0.5,0)
+			to[short] ++(0,1.5) to[R, l_=$R_a$] ++(-3.2,0) coordinate(tmp2)
+			to[short, -*] (tmp2 |- opamp1.-) to[short] ++(-0.5,0) to[R, l_=$R_1$, -o]  ($( opamp1.out |- tmp2) + (-5.5,-1) $) node[left]{$v_1$};
+			\draw (tmp2 |- opamp1.-) to[short] ++(-0.5,-1) to[R, l_=$R_2$, -o] ($( opamp1.out |- tmp2) + (-5.5,-2) $) node[left]{$v_2$};
+			\draw (opamp1.+) to[short] (tmp2 |- opamp1.+) 
+			to[short] ++(0,-1) node[ground]{};
+			\draw (opamp1.-) to[short] (tmp2 |- opamp1.-);
+		\end{tikzpicture}
+	\end{center}
+	
+	Παρατηρώντας την ζητούμενη συνάρτηση εξόδου $v_o$ προκύπτει ότι θα πρέπει:
+	
+	$(Ra/R1)(Rc/Rb) = 2
+$
+	
+	$(Ra/R2)(Rc/Rb) = 1
+$
+	
+	$(Rc/R3) = 4
+$
+	
+	$(Rc/R4) = 3$
+	
+	Οι τρεις από τις επτά αντιστάσεις μπορούν να επιλεγούν αυθαίρετα.
+	
+	Έστω ότι επιλέγεται $R_4 = \SI{10}{\kilo\ohm}$.
+	
+	Άρα, $R_c = 3$, $R_4 = \SI{30}{\kilo\ohm}$,$R_3 = R_c / 4 = \SI{7,5}{\kilo\ohm}$.
+	
+	Έστω επίσης ότι επιλέγεται $R_b = \SI{30}{\kilo\ohm}$ και $R_a = \SI{10}{\kilo\ohm}$.
+	
+	Θα πρέπει:
+	
+	$(R_a/R_1)(R_c/R_b) = (10/R_1)(30/30) = 2 \Rightarrow R_1 = \SI{5}{\kilo\ohm}$.
+	
+	$(R_a/R_2)(R_c/R_b) = (10/R_2)(30/30) = 1 \Rightarrow R_2 = \SI{10}{\kilo\ohm}$.
+	
+	
+	
+
+%\begin{enumerate}[
+%	leftmargin=0pt, itemindent=20pt,
+%	labelwidth=15pt, labelsep=5pt, listparindent=0.7cm,
+%	align=left]
+	
+%	\item \textbf{Άσκηση}
+\part{Παλιά θέματα}
+
+\section{Πίνακας Θεμάτων}
+\newcounter{magicrownumbers}
+\newcommand\rownumber{\stepcounter{magicrownumbers}\arabic{magicrownumbers}}
+
+\begin{center}
+	\begin{tabular}{||c c c c||} 
+		\hline
+		Θέμα & Εξεταστική & Σημείωση & Υπάρχει λυμένη \\ [0.5ex] 
+		\hline\hline
+		\multicolumn{4}{||c||}{Διαφορικοί ενισχυτές} \\ 
+		\hline
+		\rownumber & Σ17,Σ15,Ι14 & ------ & \autoref{sec:D.S17S15I14} \\
+		\hline
+		\rownumber & Φ17 & ------ & \hyperref[sec:D.sedra_smith7.68]{Sedra-Smith 7.68} \\
+		\hline
+		\rownumber & Φ16,Φ13 & ------ & \autoref{sec:D.F16F13}\\
+		\hline
+		\rownumber & Σ13,Φ12 & ------ & \autoref{sec:D.S13F12} \\
+		\hline
+		\rownumber & Φ15 & ------ & \autoref{sec:D.F15} \\
+		\hline
+		\rownumber & Σ16 & ------ & \autoref{sec:D.S16} \\ [1ex] 
+		\hline
+		
+		\multicolumn{4}{||c||}{Υψηλές/Χαμηλές Συχνότητες} \\ 
+		\hline
+		\setcounter{magicrownumbers}{0}
+		\rownumber & Σ17,Σ13,Ι15 & ------ & \autoref{sec:HFLS.S17S13I15}\\
+		\hline
+		\rownumber & Φ17,Σ15,Ι14 & ------ & \autoref{sec:HFLS.S17S13I15} \\
+		\hline
+		\rownumber & Φ13 & μοιάζει με την 2.1 & \autoref{sec:HFLS.F13} \\
+		\hline
+		\rownumber & Φ12 & ------ & \autoref{sec:HFLS.F12} \\
+		\hline
+		
+		\multicolumn{4}{||c||}{Πολυβάθμιοι ενισχυτές} \\ 
+		\hline
+		\setcounter{magicrownumbers}{0}
+		\rownumber & Φ17,Σ16 & ------ & \autoref{sec:Poly.F17,S16} \\
+		\hline
+		\rownumber & Ι14/Φ14/Φ13 & απλά άλλα νούμερα & \autoref{sec:Poly.I14,F14,F13} \\
+		\hline
+		\rownumber & Φ12/Sedra 9.6 & Παράδ. 9.6 σελ. 661. 7η έκδοση & \autoref{sec:Poly.F12,sedra9.6} \\
+		\hline
+		\rownumber & Σ12 & ------ & \autoref{sec:Poly.S12} \\
+		\hline
+		\multicolumn{4}{||c||}{Ανάδραση} \\ 
+		\hline
+		\setcounter{magicrownumbers}{0}
+		\rownumber & Φ16,Ι14,Σ12 & ------ & \autoref{sec:anadr.F16,I14,S12} \\
+		\hline
+		\multicolumn{4}{||c||}{Ταλαντωτές} \\
+		\hline
+		\setcounter{magicrownumbers}{0}
+		\rownumber & Σ16,Σ17 & ------ & \autoref{sec:oscil.S17,S15} \\
+		\hline
+		\rownumber & Φ16 & ------ & \autoref{sec:oscil.F16} \\
+		\hline
+		
+		
+	\end{tabular}
+\end{center}
+
+\section{Διαφορικοί Ενισχυτές}
+
+\subsection{Άσκηση 7.68 Sedra-Smith}
+\label{sec:D.sedra_smith7.68}
+
+	Στον διαφορικό ενισχυτή του σχ. 1α στην θέση της πηγής $I$ χρησιμοποιείται ο απλός καθρέπτης ρεύματος του σχήματος 1β, οπότε, οπότε $R_{EE} = r_{o5}$. Η διαγωγιμότητα $g_m$ πρέπει να ε´ιναι $\SI[per-mode=symbol]{4}{\milli\ampere\per\volt}$. Όλα τα τρανζίστορ έχουν $\beta = 150 $ και $V_A=\SI{100}{\volt}$ και είναι $V_{CC} = V_{EE} = \SI{5}{\volt}$. Να βρεθούν: η τιμή της αντίστασης $R$, η διαφορική αντίσταση εισόδου $R_{id}$, η αντίσταση εξόδου $R_o$, το κέρδος τάσης $A_d$, το ρεύμα πόλωσης εισόδου, τα όρια τιμών κοινού σήματος εισόδου και η αντίσταση εισόδου κοινού σήματος. Ισχύει $g_m = (I / 2) / V_T$. Υποθέστε ότι το τρανζίστορ παραμένει ενεργό ακόμα και για ορθή πόλωση βάσης- συλλέκτη \SI{0,4}{\volt}.
+	
+	\begin{center}
+
+	\end{center}
+
+		%\draw($ (Q7.C) + (0.55,-0.35) $) to[open, f_<=$I$] ++(0,0.3);
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+			\begin{circuitikz} [american]
+			\vspace{50pt}
+			\draw
+			(0,0) node[pnp] (Q4) {Q4}
+			(Q4.G) node[pnp, xscale=-1, anchor=G] (Q3) {}
+			(Q3) node[left, inner sep=0pt] {Q3}
+			(Q3.D) node[npn, anchor=D] (Q1) {Q1}
+			(Q4.D) node[npn, xscale=-1, anchor=D] (Q2)
+			{\scalebox{-1}[1]{Q2}};
+			\draw (Q3.S) -- ($(Q3.S)!0.5!(Q4.S)$) 
+			node[vee, rotate=180, xscale=1](vee){\scalebox{-1}[-1]{$V_{CC}$}} -- (Q4.S);
+			\draw (Q1.S) -- ($(Q1.S)!0.5!(Q2.S)$) to[isource] ++(0,-2);
+			\draw (Q2.S) -- ($(Q1.S)!0.5!(Q2.S)$);
+			\draw ($(Q1.S)!0.5!(Q2.S)+ (0,-2)$) node[vss, xscale=1](vss){\scalebox{1}[1]{$-V_{EE}$}};
+			\draw (Q2.D) to[short] ++(1,0) node[ocirc]{} node[above](vo){$v_o$};
+			\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+			\draw (Q2.G) node[ocirc]{} node[above](vo){$v_{B2}$};
+			\draw (Q1.G) node[ocirc]{} node[above](vo){$v_{B1}$};
+			\draw ($(current bounding box.south) + (0,-0.4)$) node[below] {Σχήμα α};
+		\end{circuitikz}
+		%\caption{Subcaption of the left diagram.}
+		%\label{Fig:SubLeft}
+	\end{subfigure}%
+	~ 
+	\begin{subfigure}[t]{0.5\textwidth}
+		\centering
+		\begin{circuitikz} [american]
+			\vspace{50pt}
+			\draw (0,0) node[npn, xscale=-1] (Q5) {\scalebox{-1}[1]{Q6}} 
+			(Q5.B) to[short] ++(0.5,0)
+			node[npn, anchor=B] (Q6) {\scalebox{1}[1]{Q5}};
+			\draw(Q5.C) to[R, f<=$I$, l_=$R$] ++(0,1.5) node[vcc](vcc){$V_{CC}$};
+			%\pgfextra{\ctikzset{style={/tikz/european currents}}};
+			\draw (Q6.C) to[short] ++ (0,1) edge[dashed] ++(0,1);
+			\draw ($ (Q6.C) + (0,0.5)$) to[open, f_<=$i$, european] ++ (0,1);
+			\draw ($(Q5.B)!0.5!(Q6.B)$) node[circ] {} |- (Q5.D) node[circ] {};
+			\draw (Q5.E) to[short] ++(0,-0.5) -- ($(Q5.E)!0.5!(Q6.E) + (0,-0.5) $) node[vss, xscale=1](vss){\scalebox{1}[1]{$-V_{EE}$}} 
+			to[open, v^>=$V_{BE}$] ($(Q5.B)!0.5!(Q6.B)$);
+			\draw (Q6.E) to[short] ++(0,-0.5) -- ($(Q5.E)!0.5!(Q6.E) + (0, -0.5) $);
+			\draw (Q6.C) to[short, -o] ++(1,0) node[right]{$v_o$};
+			\draw ($(current bounding box.south) + (-0.4,-0.4)$) node[below] {Σχήμα β};
+		\end{circuitikz}
+	\end{subfigure}
+\end{figure}
+
+	
+	\textbf{Λύση}
+	
+	\[\beta = 150 \Rightarrow a = \frac{\beta}{1+\beta} = 0,99 \approx 1\]
+	\[ \left|V_{CC}\right| = \left|V_{EE}\right| = \SI{5}{\volt}\]
+	Λόγω συμμετρίας $I/2$ και $I/2$ καταλήγουν στην πηγή $I$
+	 \[g_m = \frac{I_C}{V_t} = \frac{I / 2}{V_t} \Rightarrow I = 2\cdot V_T \cdot g_m = 2\cdot 0,026 \cdot 4 = \SI{208}{\micro\ampere}\]
+	\[R = \frac{5- (-5)- V_{BE}}{I} = \frac{\SI{9,3}{\volt}}{\SI{208}{\micro\ampere}} = \SI{44,71}{\kilo\ohm}\]
+	$R_{id} = (\beta+1)\cdot(2r_e + 2R_e)= (\beta+1) \cdot r_e \cdot 2$, όπου $r_e= V_T / (I/2) = \frac{\SI{26}{\milli\volt}}{\SI{104}{\micro\ampere}} = \SI{250}{\ohm}$
+	
+	$\Rightarrow R_{id} = (\beta + 1) \cdot 2 \cdot 250 = \SI{75,5}{\kilo\ohm}$
+	
+	\[R_o = \notate{r_{o4} \| r_{o2} }{2}{{\text{ Διαφορικός ενισχυτής BJT με ενεργό φορτίο}}}  \overset{r_{o4} = r_{o2} = r_{o}}{=\joinrel=} r_o / 2 = (1/2)\cdot (V_A / I_C) = (1 / 2) \cdot (V_A / (I/2)) = \SI{480,78}{\kilo\ohm}\]
+	
+	Θεωρώ $\alpha = 0,99 \approx 1$, $A_d= g_m \cdot R_o = 1,923$.
+	
+	\[v_{CM/max} = V_c + 0,4 = V_{C1} +0,4 = 5-0,7 + 0,4 = \SI{4,7}{\volt}\]
+	\[v_{CM/min} = V_{B5} - -,4 + 0,7 = -5+0,7-0,4+0,7 = \SI{-4}{\volt}\]
+	
+	Άρα το όριο τιμών κοινού σήματος εισόδου είναι από $\SI{-4}{\volt}$ έως $\SI{+4,7}{\volt}$ (όπου θεωρήσαμε ότι το τρανζίστορ παραμένει ενεργό ακόμα και για ορθή πόλωση βάσης-συλλέκτη $\SI{0,4}{\volt}$.)
+	
+	$R_{ICM} =\notate{(\beta + 1) \cdot (R_{EE}\| }{4}{{\text{ Δ.Ε. BJT}}}   
+	\notate{(r_o/2))}{2}{{r_{o1}\|r_{o2}}}
+	= (\beta + 1) \cdot (
+	\notate{r_{o5}}{2}{
+		 \parbox[t]{2in}{$R_{EE}=r_{o5}$, είναι η μόνη αντίσταση μετά το $Q_2$ μέχρι το $-V_{EE}$}}
+	\| (r_o/2)) =151(961,4\| 480,7) = \SI{48}{\mega\ohm}$
+	
+	\[ \notate{I_\beta = \frac{I/2}{\beta+1} }{1}{{\text{ Δ.Ε. BJT ρεύμα εκροπής}}}
+	= \SI{0,688}{\micro\ampere}\]	
+	
+	
+	
+	\subsection{Άσκηση Σ13,Φ12}
+	\label{sec:D.S13F12}
+	
+	Στον ενισχυτή του σχήματος είναι: $k^{'} W /L = \SI[per-mode=symbol]{0,2}{\milli\ampere\per\volt ^2 }$ και $\left| V_{A}  \right| =  \SI{20}{\volt}$ για όλα τα $Q$. Για $V_{DD} = \SI{5}{\volt}$, με τις εισόδους περίπου σε δυναμικό μξδέν και για α) $I = \SI{80}{\milli\ampere}$, β) $I = \SI{320}{\milli\ampere}$ να υπολογιστούν η γραμμική περιοχή της τάσης εξόδου $v_o$, οι διαγωγιμότητες $g_m$ και οι αντιστάσεις εξόδου των $Q_1$, $Q_2$,  η συνολική αντίσταση εξόδου και το κέρδος τάσης.
+	
+	
+	\textbf{Λύση}
+	
+	\begin{wrapfigure}[12]{R}{0.4\textwidth}
+		%\vspace{-30pt}
+		\begin{circuitikz} [american]%, baseline=4ex]
+			\draw
+			(0,0) node[pmos] (Q4) {Q4}
+			(Q4.G) node[pmos, xscale=-1, anchor=G] (Q3) {}
+			(Q3) node[left, inner sep=0pt] {Q3}
+			(Q3.D) node[nmos, anchor=D] (Q1) {Q1}
+			(Q4.D) node[nmos, xscale=-1, anchor=D] (Q2)
+			{\scalebox{-1}[1]{Q2}};
+			\draw (Q3.S) -- ($(Q3.S)!0.5!(Q4.S)$) 
+			node[vee, rotate=180, xscale=1](vee){\scalebox{-1}[-1]{$V_{DD}$}} -- (Q4.S);
+			\draw (Q1.S) -- ($(Q1.S)!0.5!(Q2.S)$) to[isource, l=$I$] ++(0,-2);
+			\draw (Q2.S) -- ($(Q1.S)!0.5!(Q2.S)$);
+			\draw ($(Q1.S)!0.5!(Q2.S)+ (0,-2)$) node[vss, xscale=1](vss){\scalebox{1}[1]{$-V_{SS}$}};
+			\draw (Q2.D) to[short] ++(1,0) node[ocirc]{} node[above](vo){$v_o$};
+			\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+			\draw (Q2.G) node[ocirc]{} node[above](vo){$v_{G2}$};
+			\draw (Q1.G) node[ocirc]{} node[above](vo){$v_{G1}$};
+		\end{circuitikz}
+		%\vspace{30pt}
+	\end{wrapfigure}
+
+	$v_{G1}, v_{G2} \approx 0$
+
+	$g_m = \frac{2I_D}{V_{OV}} = \frac{I}{V+{OV}}$, με $V_{OV} = \sqrt{\frac{2I_D}{k^{'} W /L}} = \sqrt{\frac{I}{k^{'} W /L}} $
+	
+	$r_{o2}=r_{o2} = \frac{\left| V_{A}  \right| }{I_D} = \frac{\left| V_{A}  \right| }{I/2} = \frac{2 \left| V_{A}  \right| }{I}$
+	
+	$R_o = r_{o4} \| r_{o2} = \frac{r_{o2}}{2}$ , $Q_1$, $Q_2$ ίδια.
+	
+	$A_d = g_m(r_{o4} \| r_{o2})$
+	
+	Για το $Q_2$ (N-MOS): $v_{D2S} \geq v_{G2S} - V_t \Rightarrow v_{D2} > v_{G2} - V_t \underset{v_{G2 = 0}}{\Rightarrow } v_{D2} \geq -V_t$
+
+	Για το $Q_4$ (P-MOS): $v_{SD4} \geq v_{SG4} - \left|V_t\right| \Rightarrow - v_{D4} \geq - v_{G4} + V_t \Rightarrow  v_{D4} \leq v_{G4}-V_t = v_{GS4} - V_t + v_{S4}$ 
+	$\Rightarrow v_{D4} \leq V_{OV4} + 5 \rightarrow V_{OV4} = v_{GS4} - V_t$
+	
+	 όμως $v_o = v_{D2} = v_{D4}$, άρα $-V_t \leq v_o \leq V_{OV4} + 5$
+	
+	\subsection{Άσκηση Φ15}
+	\label{sec:D.F15}
+	
+	Να σχεδιαστεί ενισχυτής όπως του σχήματος (να υπολογιστούν $V_{OV}$,  ρεύμα πόλωσης I αι ο λόγος W/L) ώστε για τιμή διαφορικής εισόδου $v_{id}=\SI{0,2}{\volt}$, το διαφορικό ρεύμα $i_d$ να είναι $g_m=\SI[per-mode=symbol]{3}{\milli\ampere/\volt }$. Για τα $Q_1$, $Q_2$ ισχύει $\mu_nC_{ox} = \SI[per-mode=symbol]{100}{\micro\ampere/\volt ^2 }$ και $\lambda = 0$. Πόσο διαφ. κέρδος προκύπτει για $R_D = \SI{5}{\kilo\ohm}$; Πόσο είναι το διαφορικό σήμα εξόδου για $u_{id} = \SI{0,2}{\volt}$;
+	
+	\begin{circuitikz}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[nmos,xscale=-1](Q2){\scalebox{-1}[1]{$Q_2$}};
+		\draw (Q2.C) to[short, f<^=$i_{D2}$] ++(0,0.5)
+		to[short, -o] ++(1,0) node[right]{$v_{D2}$} ++(-1,0)
+		to[R, l_=$R_{D}$] ++(0,3) node[vcc]{};
+		\draw (Q2.E) to[short] ++(0,-0.3)
+		to[short] ++ (-2.5,0)
+		to[isource, l=$I$] ++(0,-2) node[vee](vee){$-V_{SS}$};
+		\draw (-5,0) node[nmos](Q1){$Q_1$};
+		\draw (Q1.C) to[short, f<_=$i_{D1}$] ++(0,0.5) 
+		to[short, -o] ++(-1,0) node[left]{$v_{D1}$} ++(1,0)
+		to[R, l^=$R_{L}$] ++(0,3) node[vcc]{};
+		%\draw (Q1.C) to[short, -o] ++(-1,0) node[left]{$v_{D1}$};
+		\draw (Q1.E) to[short] ++(0,-0.3)
+		to[short] ++(2.5,0);
+		\draw (Q2.B) to[short, o-] ++(1,0) to[vsource, invert, l^=$v_{G2}$] ++(0,-2.5) node[ground]{};
+		\draw (Q1.B) to[short, o-] ++(-1,0) to[vsource, invert, l_=$v_{G1}$] ++(0,-2.5) node[ground]{};
+		
+		\draw ($(Q1.G)!0.5!(Q2.G) +(0,5)$) node[above]{$V_{DD}$};
+
+	\end{circuitikz}
+
+	\textbf{Λύση}
+	
+	$i_d = I / 3 \Rightarrow (I / V_{OV}) \cdot (v_{id} / 2) = I /3 \Rightarrow V_{OV} = \SI{0,3}{\volt}$
+	
+	$g_m = \SI[per-mode=symbol]{3}{\milli\ampere} \Rightarrow \frac{2I_D}{\left|V_{OV}\right|} = 3\Rightarrow \frac{I}{\left|V_{OV}\right|} = 3 \Rightarrow I = \SI{0,9}{\milli\ampere}$
+	
+	Ισχύει: 
+	
+	$I/2 = (1/2) \cdot k^{'}\cdot (W/L) \cdot V_{OV}^2 \Rightarrow W/L = I/(k^{'} V_{OV}^2) \Rightarrow W/L = \SI{0,9}{\milli\ampere} / ( \SI{0,09}{\volt^2}\SI[per-mode=symbol]{100}{\milli\ampere/\volt ^2 } ) = 0,1 $
+	
+	\[A_d = \notate{g_m\cdot R_D}{1}{{\text{ Δ.Ε. MOS}}}
+	= \SI[per-mode=symbol]{3}{\milli\ampere/\volt } \cdot \SI{5000}{\ohm} = \SI[per-mode=symbol]{0,003}{\ampere\per\volt} \cdot \SI[per-mode=symbol]{5000}{\volt\per\ampere} \Rightarrow 15\]
+	
+	\[
+	\notate{u_o = A_d \cdot u_{id} }{1}{{\text{ $A_d = (v_{o2} - v_{o1})/ v_{id}$,   $v_{o2} - v_{o1}$   Δ.Ε. MOS}}}
+	= 15\cdot 0,2 = \SI{3}{\volt}\]
+
+	\section{Υψηλές/Χαμηλές Συχνότητες}
+	
+	\subsection{Άσκηση Φ17,Σ15,Ι14}
+	
+	Στον ενισχυτή του σχήματος τα τρανζίστορ έχουν $\beta = 120$, $V_a = \SI{100}{\volt}$, 
+	$C_{\mu} = \SI{0,2}{\pico\farad}$, $C_{je} = \SI{0,8}{\pico\farad}$. Για ρεύμα πόλωσης $\SI{100}{\micro\ampere}$ η συχνότητα $f_T = \SI{500}{\mega\hertz}$.
+
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item Να βρεθεί η αντίσταση εισόδου $R_{in}$ και το κέρδος στις μεσαίες συχνότητες $A_M$.
+		\item Να υπολογιστεί η ανώτερη συχνότητα αποκοπής $f_H$ με τη μέθοδο σταθερών χρόνου ανοικτού κυκλώματος. Ποιος πυκνωτής επικρατεί και ποιος είναι ο δεύτερος πιο σημαντικός;
+	\end{enumerate}
+	
+	\begin{center}
+	\begin{circuitikz}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[npn](Q1){$Q_1$};
+		\draw (Q1.C) to[short] ++(0,0.5) node[vcc]{};
+		\draw (Q1.B) to[R, l_=${R_{sig}=\SI{10}{\kilo\ohm}}$] ++(-2.5,0)
+		to[short] ++(-0.5,0) to[short] ++(0,-0.5) to[vsource, invert, l^=$V_{sig}$] ++(0,-2) node[ground]{};
+		\draw (Q1.E) to[isource, l^=$\SI{100}{\micro\ampere}$] ++(0,-2) node[vee]{};
+		\draw (Q1.E) to[short] ++(2,0) node[npn, anchor = B](Q2){$Q_2$}
+		(Q2.E) node[ground]{} (Q2.C) to[isource, invert, l_=$\SI{100}{\micro\ampere}$] ++(0,2)
+		node[vcc]{};
+		\draw (Q2.C) to[short, *-*] ++(3,0) to[short] ++(0,-1) to[C, l^=${C_L = \SI{1}{\pico\farad}}$] ++(0,-2) node[ground]{}
+		++(0,3) to[short, -o] ++(2.5,0) node[above right]{$v_o$};
+		\draw[->]  to[open] ($ (Q1.B)  + (-0.5,-3) $) |- ($(Q1.B)  + (0.5,-1) $);
+		\draw ($ (Q1.B)  + (-0.5,-3) $) node[below]{$R_{in}$};
+	\end{circuitikz}
+	\end{center}
+
+	\textbf{Λύση}
+
+	\begin{enumerate}[label=\noanw\alph*.]
+		\item
+			
+		\[g_m = \frac{I_C}{V_T} = \frac{\SI{0,1}{\milli\ampere}}{\SI{25}{\milli\volt}}= 
+		\SI[per-mode=symbol]{4}{\milli\ampere\per\volt}\]
+		\[r_o = \frac{\left|V_A\right|}{I_C} = \frac{120}{0,1} = \SI{1,2}{\mega\ohm} \]
+		\[r_o = \frac{\left|V_A\right|}{I_C} = \frac{120}{0,1} = \SI{1,2}{\mega\ohm} \]
+		\[r_\pi \frac{\beta}{g_m} = \frac{120}{4} = \SI{30}{\kilo\ohm} \]
+		\[r_e = \frac{\alpha}{g_m} = \SI{0,25}{\kilo\ohm}\]
+		\[C_\pi + C_\mu = \frac{g_m}{2\pi f_T} = \frac{4\cdot 10^{-3}}{2\pi \cdot 500\cdot 10^6} = \SI{1,27}{\pico\farad} \Rightarrow C_\pi = \SI{1,07}{\pico\farad}\]
+			
+		\textbf{AC Ανάλυση}
+		
+		\begin{center}
+			\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+				\draw (0,0) node[npn](Q1){$Q_1$};
+				\draw (Q1.C) to[short] ++(0,0.5) to[short] ++(1,0) 
+				node[ground]{};
+				\draw (Q1.B) to[short] ++(-0.5, 0) to[R, l_=$R_{sig}$] ++(-2.5,0)
+				to[short] ++(-0.5,0) to[short] ++(0,-0.5) to[sV, invert, l^=$V_{sig}$] ++(0,-2) node[ground]{};
+				
+				\draw (Q1.E) to[short] ++(2,0) node[npn, anchor = B](Q2){$Q_2$}
+				(Q2.E) node[ground]{};
+				
+				\draw (Q2.C) to[short] ++(3,0) to[short] ++(0,-1) to[R, l^=$R_L$] ++(0,-2) node[ground]{}
+				++(0,3) to[short, -o] ++(2.5,0) node[above right]{$v_o$};
+				
+				\draw[->]  to[open] ($ (Q1.B)  + (-0.5,-2.5) $) |- ($(Q1.B)  + (0.5,-1) $);
+				\draw ($ (Q1.B)  + (-0.5,-2.5) $) node[below]{$R_{in}$};
+				
+				\draw[->]  to[open] ($ (Q2.B)  + (-0.5,-2) $) |- ($(Q2.B)  + (0.5,-0.5) $);
+				\draw ($ (Q2.B)  + (-0.5,-2) $) node[below]{$R_{in}$};
+				
+				\draw[->]  to[open] ($ (Q1.E)  + (-0.75,-2) $) -| ($(Q1.E)  + (0,-0.5) $);
+				\draw ($ (Q1.E)  + (-0.75,-2) $) node[below right]{$r_{e}$};
+			\end{tikzpicture}
+		\end{center}
+	
+		
+		\[
+		\left.
+		\arraycolsep=1.4pt\def\arraystretch{2.2}
+		\begin{array}{ll}
+			R_{in2} = r_{\pi2} = \SI{30}{\kilo\ohm} \\
+			R_{in} = \left(\beta + 1\right) \left(r_{e1} + R_{in2}\right) = \SI{3,66}{\mega\ohm}
+		\end{array}
+		\right \}\rightarrow\parbox{4cm}{Πολυβάθμιος ενισχυτής κοινού εκπομπού}
+		\]
+		
+		
+		%\begin{circuitikz}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		%	\draw (0,0) to[sV, l=$V_{sig}$] ++(0,3) to[R, l_=$R_{sig}$,-*] ++(4,0) node[above %right]{$V_{B1}$}
+		%	to[R, l^=$R_{in}$] ++(0,-3) to[short] ++(-2,0) to[short] ++(0,-0.2) %node[tlground]{} ++(0,0.2)  to[short] ++(-2,0); 
+		%\end{circuitikz}
+		\begin{tikzpicture}[american, scale = 0.7,
+				%background rectangle/.style={fill=olive!45}, show background rectangle
+				]
+				\draw (0,0) to[sV, l=$V_{sig}$] ++(0,3) to[R, l_=$R_{sig}$,-*] ++(4,0) node[above right]{$V_{B1}$} to[R, l^=$R_{in}$] ++(0,-3) to[short] ++(-2,0) to[short] ++(0,-0.2) node[tlground]{} ++(0,0.2)  to[short] ++(-2,0);	
+				
+				\draw [decorate, ultra thick,
+				decoration = {calligraphic brace, mirror, raise=5pt, amplitude=8pt}] (5.5,-0.2) --  (5.5,3.2) node[pos=0.5,right=15pt,black]{
+					$\begin{aligned}
+						\rightarrow V_{B1} = \frac{R_{in}}{R_{in} + R_{sig}}
+					\end{aligned}$};
+		\end{tikzpicture}
+
+		\[
+		\left.
+		\arraycolsep=1.4pt\def\arraystretch{2.2}
+		\begin{array}{ll}
+			\frac{V_{B1}}{V_{sig}}= \frac{R_{in}}{R_{in} + R_{sig}}= \SI[per-mode=symbol]{0,99}{\volt\per\volt} \\
+			\frac{V_{B2}}{V_{B1}}= \frac{R_{in2}}{r_{e} + R_{in2}}= \SI[per-mode=symbol]{0,99}{\volt\per\volt}
+		\end{array}
+		\right \}\rightarrow\parbox{4cm}{διαίρεση τάσης}
+		\]
+		
+		\[
+		\frac{V_o}{V_{B2}} = 
+		\notate{-g_m\cdot R_L }{1}{\text{ $A_M$ κοινού εκπομπού με ενεργό φορτίο}}
+		=-g_m \cdot r_o = \SI[per-mode=symbol]{-4800}{\volt\per\volt}
+		\]
+		
+		\[
+		\text{Τελικά: } A_M = \frac{V_o}{V_{sig}} = \SI[per-mode=symbol]{-4704,5}{\volt\per\volt}
+		\]
+		
+		\item Το μοντέλο υψηλών συχνοτήτων του κυκλώματος είναι το:
+		
+			\begin{tikzpicture}[american, scale = 0.7]
+			\draw (0,0) node[ground]{} to[C, l^=$C_{\mu 1}$] ++ (0,2) to[short, -*] ++(0,0.5) node[above]{$B_1$}
+			to[short] ++(-0.5, 0) to[R, l_=$R_{sig}$] ++(-3,0)
+			to[short] ++(-0.5,0) to[short] ++(0,-0.5) to[sV, invert, l^=$V_{sig}$] ++(0,-2) node[ground]{};
+			\draw (0,0) ++(0,2.5) to[short] ++(2.5,0) to[R, l_=$r_{\pi 1}$] ++(0,-3)
+			to[short] ++(2,0) node[coordinate] (C1) {} to[C, l_=$C_{\pi 1}$] ++(0,3) to[short] ++(-2,0);
+			\draw (C1) to[short] ++(1.5,0) node[below]{$E_1/B_2$} to[short] ++(1.5,0) to[cI, invert, l_=$g_m V_{\pi 1}$]  ++(0,3.5)
+			to[short] ++(4.5,0) node[ground]{} ++(-1.5,0) node[above]{$C_1$} to[R, l^=$r_o$, *-] ++(0,-3.5);
+			\draw(C1) ++(3,0) to[short] ++(0,-0.5)to[C, l^=$C_{\pi 2}$] ++(0,-2) node[ground]{} ++(0,2.5) to[short] ++(3,0) to[short] ++(0,-0.5) to[R, l^=$r_{\pi 2}$] ++(0,-2) node[ground]{} ++(0,2.5) to[C, l=$C_{\mu2}$] ++(3.5,0) 
+			to[short] ++(0,-0.5) to[cI] ++(0,-2) node[ground]{} ++(0,2.5) to[short] ++(2,0)
+			to[short] ++(0,-0.5) to[R, l_=$r_o$] ++(0,-2) node[ground]{} ++(0,2.5) to[short] ++(2,0)
+			to[short] ++(0,-0.5) to[C, l^=$C_L$] ++(0,-2) node[ground]{} ++(0,2.5);
+			\draw[->] to[open] ($ (C1)  + (-3.5,-2) $) |- ($(C1)  + (-2.5,0.5) $);
+			\draw ($ (C1)  + (-3.5,-2) $) node[below]{$R_{in}$};
+			\draw[->]  to[open] ($ (C1)  + (2,-3) $) |- ($(C1)  + (1.5,-1.5) $);
+			\draw ($ (C1)  + (2,-3) $) node[below]{$R_{out1}$};
+			\draw[->]  to[open] ($ (C1)  + (5,-3) $) |- ($(C1)  + (5.5,-1) $);
+			\draw ($ (C1)  + (5,-3) $) node[below]{$R_{in2}$};
+		\end{tikzpicture}
+		
+		Το π-υβριδικό BJT (high freq):
+		
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw(0,0) ++(0,2.5) to[short] ++(-0.5, 0) to[R, l_=$r_x$] ++(-3,0)
+			to[short, -o] ++(-0.5,0) node[left]{$B$};
+			\draw(0,0) ++(0,2.5)  to[R, l_=$r_{\pi}$, v^=$V_\pi$, *-] ++(0,-3)
+			to[short] ++(3,0) node[coordinate] (C1) {} to[C, l_=$C_{\pi}$, *-*] ++(0,3)
+			to[C, l^=$C_{\mu}$] ++(3,0) ++(-3,0) to[short] ++(-1.5,0) node[above]{$B^{'}$} to[short] ++(-1.5,0);
+			\draw (C1) to[short] ++(1.5,0) to[short, *-o] ++(0,-0.8) node[below]{$E$} ++(0,0.8) to[short] ++(1.5,0) to[cI, invert, l_=$g_m V_{\pi}$, *-*]  ++(0,3)
+			to[short, -o] ++(4.5,0) node[right]{$C$} ++(-1.5,0) to[R, l^=$r_o$, *-] ++(0,-3) to[short] +(-3,0);
+		\end{tikzpicture}
+		
+		Για τον υπολογισμό των σταθερών χρόνου του κάθε πυκνωτή, θέλουμε την αντίσταση που φαίνεται από τα άκρα του έχοντας ανοιχτοκυκλώσει τους υπόλοιπους πυκνωτές.
+		
+		\[R_{\mu 1} = R_{sig} \| R_{in} = 10k \| 3,66M \approx 10k\]
+		\[R_{\pi 1} = \frac{R_{sig} + R_{in} }{1 + \frac{R_{sig}}{r_{\pi 1} }  + \frac{R_{in2}}{r_{e 2} } } = \frac{10k + 30k }{1 + \frac{10k}{30k }  + \frac{30k}{0,25k} } = \SI{0,33}{\kilo\ohm}\]
+		
+		\[R_{\pi 2} =  R_{in2} \| \notate{R_{out} }{1}{\frac{r_{\pi 1} + R_{sig}}{\beta + 1} =r+{e1} + \frac{R_{sig}}{\beta + 1}} = r_{\pi 2} \| \left(r_{e1} + \frac{R_{sig}}{\beta + 1}\right) = 30k \| 0,33k \approx \SI{0,33}{\kilo\ohm} \]
+		
+		Η $C_{\mu 2}$ "σπάει" από το Miller όπως σε έναν απλό ενισχυτή CE.
+		\[
+		R_{\pi 2} =  R_{in2} \| R_{out} = r_{\pi 2} \| \left(r_{e1} + \frac{R_{sig}}{\beta + 1}\right) %= 30k \| 0,33k \approx \SI{0,33}{\kilo\ohm}
+		\]
+		\[
+		\notate{C_{in2}}{2}{\text{κοινού εκπομπού, high freq}}
+		= C{\pi 2} + C_{\mu 2} (1 + g_m \cdot \notate{r_{o2}}{0.8}{= R_L}
+		) = 1,07 + 0,2\left(1+4\cdot 12M\right) = \SI{961,27}{\pico\farad}
+		\]
+		και βλέπει την $R_{\pi2}$ στα άκρα της.
+		
+		
+		$R_{CL} = r_o = \SI{1,2}{\mega\ohm}$
+		
+		Τελικά:
+		\[
+		\begin{aligned}
+			\tau_H &= C_{\mu 1} \cdot R_{\mu 1} + C_{\pi 1} \cdot R_{\pi 1} + C_{in 2} \cdot 
+			\notate{R_{\pi 2} }{2}{\text{$\approx$ πολυβάθμιοι}}
+			+ C_{L} \cdot R_{CL} \\ 
+			&= 2 + 0,35 + 317,22 + 1200 = \SI{1519,57}{\nano\second}
+		\end{aligned}
+		\]
+		\[f_H \frac{1}{2\pi \tau_H} = \SI{104,74}{\mega\hertz}\]
+		
+		Ο πιο σημαντικός πυκνωτής είναι ο $C_L$, ενώ ο δεύτερος πιο σημαντικός ο $C_{in2}$.	
+	\end{enumerate}
+
+	\subsection{Άσκηση Φ12}
+	\label{sec:HFLS.F12}
+	
+		Στον ενισχυτή του σχήματος είναι $R_{sig} = \SI{100}{\kilo\ohm}$, $R_{IN}= \SI{100}{\kilo\ohm}$, $C_{gs} = \SI{1}{\pico\farad}$, $C_{gd} = \SI{0,2}{\pico\farad}$, $g_m=\SI[per-mode=symbol]{3}{\milli\ampere\per\volt}$, $r_o=\SI{50}{\kilo\ohm}$, $R_D = \SI{8}{\kilo\ohm}$, $R_L=\SI{10}{\kilo\ohm}$.
+		Ζητείται το κέρδος $Α_Μ$ και η συχνότητα αποκοπής $f_H$ με προσέγγιση χωρητικότητας Miller. Για τον διπλασιασμό της $f_H$ μπορεί μα αλλάξει είτε η $R_{in}$ είτε η $R_{out}$. Να βρεθούν ξεχωριστά οι τιμές τους καθώς και η αντίστοιχη τιμή κέρδους στις μέσες συχνότητες.
+ 	
+	 	
+	
+	\begin{figure}[H]
+	\begin{center}
+		\begin{tikzpicture}[american, scale=0.7]
+			\draw (0,0) node[nmos](Q1){};
+			\draw (Q1.E) to[isource, l=$I$]
+			++(0,-3)  node[vee](vee){$-V_{SS}$};
+			\draw (Q1.C) to[R, l_=$R_D$]
+			++(0,3) node[vcc](VCC){$V_{DD}$};
+			\draw (Q1.E) to[short] ++(3,0) to[short] ++(0,-1) to[C, l^=$C_S$]
+			++(0,-2) node[ground](GND){};
+			\node [coordinate] (in) at ($(Q1.B) + (-1,0)$) {};
+			\draw (Q1.B) to[short] (in);
+			\draw (in) to[short] ++(0,-1) to[R , l^=$R_G$] ++(0,-3) node[ground](GND){};
+			\draw (in) to[short] ++(-1,0) to[C, l_=$C_{C1}$] ++(-1,0)
+			to[short] ++(-1,0) to[R, l_=$R_{sig}$] ++(-3,0) to[short] ++(0,-1)
+			to[vsource, l_=$V_{sig}$, invert] ++(0,-3) node[ground](GND){};
+			\draw (Q1.C) to[short] ++(0.5,0) to[C, l^=$C_{C2}$] ++(5,0) to[short] ++(2,0) node[ocirc, right]{} node[above](vo){$v_{o}$} to[open] ++(-2,0) to[short] ++(0,-1) 
+			to[R, l^=$R_L$, *-] ++(0,-3) node[ground](GND){};
+		\end{tikzpicture}
+	\end{center}
+	\end{figure}
+
+	\textbf{Λύση}
+	
+	Έχουμε ενισχυτή CS. Άρα: 
+	
+\[
+A_M = \notate{\frac{R_G}{R_G + R_{sig}} \cdot g_m \left(R_L\| R_D\| r_o\right) }{2}{
+	\parbox[t]{2in}{Mid freq κοινής πηγής, \\$R_S=0$, $R_G = R_{in}$}} = -\frac{100}{200} \cdot 3 \left(\frac{1}{10} + \frac{1}{8} + \frac{1}{50}\right)^{-1} = \SI[per-mode=symbol]{6,12}{\volt\per\volt}
+\]
+Επίσης: \[\notate{f_H}{2}{\parbox[t]{4cm}{high-freq \\κοινής πηγής}} = \frac{1}{2 \pi \cdot C_{in} \cdot R^{'}_{sig}}\text{ ,   } \qquad R^{'}_{sig} = R_{sig} \| R_G = 100\|100 = \SI{50}{\kilo\ohm}\]
+
+\[
+\begin{aligned}
+	\text{Θ. Miller:} \qquad C_{in} &= C_{gs}+C_{gd} \left(1+g_m\left(R_L\|R_D\|r_o\right)\right) \quad \rightarrow \text{  high-freq, CS}
+	\\&= 1+0,2\left(1+3\cdot4,08\right) = \SI{3,65}{\pico\farad}
+\end{aligned}
+\]
+\[\text{Άρα: }  f_H = \frac{1}{2\pi \cdot 3,65 \cdot 50} = \SI{872}{\mega\hertz}
+\]
+\[ \rightarrow \text{Για } \quad  f^{'}_H = 2 f_H = \SI{1744}{\mega\hertz}
+\]
+\begin{enumerate}[label=\noanw\alph*.]
+	\item
+	Με σταθερή $R_{out} \rightarrow$ σταθερός $\notate{C_{in}}{1}{\parbox[t]{8cm}{διότι από $C_{in} = C_{gs} + C_{gd}(1+g_m R^{'}_L) \rightarrow R^{'}_L = R_{out}^{'} \\ $ άρα const $R_{out} \Rightarrow$ const $C_{in}$}}$
+	
+	\[
+	\begin{aligned}	
+		f^{'}_H = 2f_H &\Rightarrow \frac{1}{2\pi C_{in} R^{''}_{sig}} =\frac{2}{2\pi C_{in} R^{'}_{sig}} \Rightarrow \notate{\frac{R^{'}_{in} \cdot \cancel{R_{sig}}}{R^{'}_{in} + R_{sig}}}{1.5}{\parbox[t]{8cm}{$R^{''}_{sig} = R_{sig} \| R^{'}_G= R_{sig} \| R^{'}_{in}$ διότι $R_G=R_{in}$}}	=\frac{1}{2} \cdot \frac{R_{in} \cdot \cancel{R_{sig}}}{R_{in} + R_{sig}} \\&\Rightarrow
+		\frac{R^{'}_{in}}{R^{'}_{in} + 100} = \frac{1}{2} \cdot \frac{100}{200} \Rightarrow \frac{R^{'}_{in}}{R^{'}_{in} + 100} = \frac{1}{4} \\&\Rightarrow 3 R^{'}_{in} = 100 \Rightarrow  R^{'}_{in} = \SI{33,3}{\kilo\ohm} \Rightarrow A_M = -3,059
+	\end{aligned}
+	\]
+	\item
+	
+	
+	
+	
+	Με σταθερή $R_{in} \rightarrow $ αλλάζει ο $C_{in}$
+	\[
+	\begin{aligned}
+		f^{'}_H = 2 f_H &\Rightarrow \frac{1}{C^{'}_{in}} = \frac{2}{C_in} \Rightarrow C^{'}_{in}  =1,825 \\
+		& \Rightarrow C_{gs} + C_{gd} (1+g_m\cdot \notate{R^{'}_{out}}{0.75}{\parbox[t]{8cm}{$R^{'}_{out} = R^{'}_L$!!!}}	) = 1,825 \\
+		& \Rightarrow 1+g_m R^{'}_{out} = 4,125 \Rightarrow R^{'}_{out} = \SI{1,042}{\kilo\ohm} \Rightarrow A_M = -1.563  
+	\end{aligned}
+	\]
+	
+\end{enumerate}
+	
+	\section{Πολυβάθμιοι Ενισχυτές}
+
+	\subsection{Άσκηση Φ17,Σ16}
+	\label{sec:Poly.F17,S16}
+	
+	Στον τελεστικό ενισχυτή του σχήματος είναι $g_{m1}=g_{m2} = \SI[per-mode=symbol]{1}{\milli\ampere\per\volt}$, $g_{m6} = \SI[per-mode=symbol]{3}{\milli\ampere\per\volt}$, η συνολική χωρητικότητα μεταξύ $D_2$ και γείωσης είναι $\SI{0,2}{\pico\farad}$ και η συνολική χωρητικότητα μεταξύ κόμβου $D_6$ και γείωσης είναι $\SI{3}{\pico\farad}$. Να υπολογιστεί η τιμή της χωρητικότητας $C_c$ ώστε να είναι $f_T= \SI{40}{\mega\hertz}$ και να επαληθευθεί ότι η συχνότητα $f_T$ είναι αρκετά μικρότερη από τις συχνότητες $f_z$ και $f_{p2}$.
+	
+		\begin{figure}[H]
+		\begin{center}
+			\begin{tikzpicture} [american]
+				\vspace{0pt}
+				\draw
+				(0,0) node[nmos] (Q4) {Q4}
+				(Q4.G) node[nmos, xscale=-1, anchor=G] (Q3) {\scalebox{-1}[1]{Q3}};
+				\draw (Q3.D) to[short] ++(0,.5) node[pmos, anchor=D] (Q1) {Q1};
+				\draw (Q4.D) to[short] ++(0,.5) node[pmos, anchor=D, xscale=-1] (Q2) {\scalebox{-1}[1]{Q2}};
+				\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+				\draw (Q1.S) -- (Q2.S);
+				%\pgfextra{\ctikzset{style={/tikz/european currents}}};
+				\draw ($(Q1.S)!0.5!(Q2.S)$) to[short, f_<=I, *-] ++ (0,1) node[pmos, anchor=D](Q5) {Q5};
+				\draw (Q5.G) to[short] ++ (-2,0)
+				node[pmos, xscale=-1, anchor=G](Q8) {\scalebox{-1}[1]{Q8}};
+				\draw (Q8.D) to[isource, l_=$I_{REF}$] ++(0,-5.5) node[vee](VEE){};
+				\draw (Q3.S) node[vee](VEE){$-V_{SS}$};
+				\draw (Q4.S) node[vee](VEE){};
+				\draw (Q4.D) to[short, *-] ++(1,0) to[short] ++(0,-1)
+				to[short] ++(1,0) node[nmos, anchor=G](Q6) {Q6};
+				\draw (Q2.D) to[short, *-] ++(1.5,0) to[C, l=$C_C$] ++ (1,0)
+				to[short, -*] (Q6.D |- Q2.D);
+				\draw (Q6.D) to[short] ++(0,3.5) node[pmos, anchor=D](Q7) {$Q7$};
+				\draw (Q1.G) node[ocirc]{} node[above](minus){$-$};
+				\draw (Q2.G) node[ocirc]{} node[above](plus){$+$};
+				\draw (Q6.D) ++ (0,2) to[short, *-] ++(1,0)
+				node[ocirc]{} node[above](vo){$v_o$};
+				\draw (Q7.G) to[short] ++(-2,0) to[short] ++(0,-1)
+				to[crossing] ($ (Q5.G) -(0,1)$) to[short] ++(-0.4,0) to[short, -*] ++(0,1);
+				\draw (Q8.G) node[circ] {} |- (Q8.D) node[circ] {};
+				\draw (Q6.S) node[vee](VEE){};
+				\draw (Q5.S) node[vcc](VCC){$+V_{DD}$};
+				\draw (Q7.S) node[vcc](VCC){};
+				\draw (Q8.S) node[vcc](VCC){};
+			\end{tikzpicture}
+		\end{center}
+	\end{figure}
+
+		\textbf{Λύση}
+	
+	Σε τελεστικό ενισχυτή είναι: $g_{m1} = g_{m2} = \SI[per-mode=symbol]{1}{\milli\ampere\per\volt}$, $g_{m6}= \SI[per-mode=symbol]{3}{\milli\ampere\per\volt}$
+	
+	\[
+	\left.
+	\arraycolsep=1.4pt\def\arraystretch{2.2}
+	\begin{array}{ll}
+		G_{m1} \text{: } g_{m} \text{ 1ης βαθμίδος}\\
+		G_{m2} \text{: } g_{m} \text{ 2ης βαθμίδος}
+	\end{array}
+	\right \}\rightarrow
+	\notate{\omega_T = \frac{G_{m1}}{C_C} }{1}{\text{ τελεστικός ενισχυτής MOS (συνδυασμός $\omega_{p1}$, $\omega_T$)}} \Rightarrow C_C = \frac{g_{m1}}{2\pi f_T} =\SI{3,18}{\pico\farad}
+	\]
+	
+	\[\notate{f_z = \frac{G_{m2}}{2\pi C_C}}{1}{\parbox[t]{3in}{Γενικότερα: $\omega_i = 2 \pi f_i$ \\ από $\omega_z$, τελ. ενισχυτής με MOS}}= \frac{g_{m6}}{2\pi C_C} = \SI{150,14}{\mega\hertz}\]
+	
+	\[\notate{f_{D2} = \frac{G_{m2} \cdot C_C}{2\pi \left[C_1C_2+C_C\left(C_1+C_2\right)\right]}}{1.5}{\text{από $\omega_{p2}$}} = \frac{6\cdot 3,18}{2\pi \notate{\left[0,6+3,18\cdot3,2\right]}{2}{
+			\left \{
+			\arraycolsep=1pt\def\arraystretch{1.4}
+			\begin{array}{ll}
+				C_1 = \SI{0,1}{\pico\farad} \text{ (1η βαθμίδα)}\\
+				C_2 = \SI{3}{\pico\farad} \text{ (2η βαθμίδα)}
+			\end{array}
+			\right.
+	}} = \SI{282}{\mega\hertz}
+	\]
+	
+	\subsection{Άσκηση Φ12,Sedra (Παρ. 9.6)}
+	\label{sec:Poly.F12,sedra9.6}
+	
+	Για τον ενισχυτή του σχήματος (δες προηγ. σχήμα) οι διαστάσεις τρανζίστορ W/L (σε \SI{}{\micro\metre}) για όλα τα $Q$ δίνονται στον πίνακα και είναι: $\mu_n C_{ox} =\SI[per-mode=symbol]{160}{\micro\ampere\per\volt^2}$, $\mu_p C_{ox} =\SI[per-mode=symbol]{40}{\micro\ampere\per\volt^2}$, $I_{REF} = \SI{90}{\micro\ampere}$, $\left|V_A\right| = \SI{10}{\volt}$, $V_{tn} = \SI{0,7}{\volt}$, $V_{tp} = \SI{-0,8}{\volt}$, $V_{DD} = V_{SS} \SI{2,5}{\volt}$. Ζητούνται για όλα τα τρανζίστορ τα $I_D$, $\left|V_{OV}\right|$, $\left|V_{GS}\right|$, $g_m$ και $r_o$. Να υπολογιστούν επίσης τα κέρδη $A_1$, $A_2$, το dc κέρδος τάσης ανοικτού βρόχου $A_o$, η περιοχή κοινού σήματος εισόδου και το εύρος τάσης εξόδου. Να αγνοηθεί η επίδραση της $V_A$ στο ρεύμα πόλωσης.
+	
+	\begin{tabular}{|l||*{8}{c|}}\hline
+		Τρανζίστορ & $Q_1$ & $Q_2$ & $Q_3$ & $Q_4$ & $Q_5$ & $Q_6$ & $Q_7$ & $Q_8$ \\
+		\hline\hline
+		W/L & 20/0,8 & 20/0,8 & 5/0,8 & 5/0,8 & 40/0,8 & 10/0,8 & 40/0,8 & 40/0,8 \\
+		\hline
+	\end{tabular}
+	
+	\textbf{Λύση}
+	
+	Τα $Q_5$, $Q_7$, $Q_8$ έχουν ίδιο λόγο W/L και ίδιο $V_{GS}$
+	\[\text{Άρα: } I_{D5}=I_{D7}=I_{D8}=I_{REF}= \SI{90}{\micro\ampere}\]
+	\[I_{D6}=I_{D7} = \SI{90}{\micro\ampere}\]
+	\[I_{D1} = I_{D2}=I_{D3}=I_{D4}= \frac{I_{D5}}{2} = \SI{45}{\micro\ampere}\]
+	\[\left|V_{OV}\right|= \sqrt{\frac{2I_D}{k^{'} \frac{W}{L}}}, \text{ ,   }\left|V_{GS}\right|=\left|V_t\right| + \left|V_{OV}\right|\text{ ,  } g_m= \frac{2I_D}{\left|V_{OV}\right|} \text{ ,  } r_o = \frac{\left|V_A\right|}{I_D}\]
+	
+	\begin{tabular}{|l||*{9}{c|}}\hline
+		& $Q_1$ & $Q_2$ & $Q_3$ & $Q_4$ & $Q_5$ & $Q_6$ & $Q_7$ & $Q_8$ & Μονάδα \\
+		\hline\hline
+		$\left|V_{OV}\right|$ & 0,3 & 0,3 & 0,3 & 0,3 & 0,3 & 0,3 & 0,3 & 0,3 & $\SI{}{\volt}$\\
+		$\left|V_{GS}\right|$ & 1,1 & 1,1 & 1 & 1 & 1,1 & 1 & 1,1 & 1,1 & $\SI{}{\volt}$ \\
+		$g_m$ & 0,3 & 0,3 & 0,3 & 0,3 & 0,6 & 0,6 & 0,6 & 0,6 & \SI[per-mode=symbol]{}{\milli\ampere\per\volt}\\
+		$r_o$ & 222 & 222 & 222 & 222 & 111 & 111 & 111 & 111 & \SI{}{\kilo\ohm}\\
+		\hline
+	\end{tabular}
+	\[A_1=-g_{m2} \cdot \left(r_{o2} \| r_{o4}\right) = \SI[per-mode=symbol]{-33,3}{\volt\per\volt}\]
+	\[
+	\left.
+	\arraycolsep=1.4pt\def\arraystretch{2.2}
+	\begin{array}{ll}
+		A_1=-g_{m2} \cdot \left(r_{o2} \| r_{o4}\right) = \SI[per-mode=symbol]{-33,3}{\volt\per\volt} \\
+		A_2=-g_{m6} \cdot \left(r_{o6} \| r_{o7}\right) = \SI[per-mode=symbol]{-33,3}{\volt\per\volt} \\
+		A_o= A_1 \cdot A_2 = \SI[per-mode=symbol]{1108,9}{\volt\per\volt}
+	\end{array}
+	\right \}\rightarrow\parbox{5cm}{θεωρία}
+	\]
+	\[
+	\rightarrow \text{Εύρος περιθωρίου μετ. σήματος εξόδου:}
+	\]
+	\[
+	\text{Το $Q_7$ είναι στον κορεσμό όταν: } 
+	\begin{aligned}
+		& V_{SD} \geq V_{S7} - \left|V_{tp}\right| \\\Rightarrow &2,5 - V_D \geq \left|V_{OV7}\right| = 0,3 \\ \Rightarrow & V_{D7} \leq \SI{2,2}{\volt}
+	\end{aligned}
+	\]
+	
+	$Q_7$, $Q_6$ πρέπει $\rightarrow$ στον κορεσμό
+	\[
+	\text{Άρα:} - V_{SS} + V_{OV6} \leq v_o \leq V_{DD} - \left|V_{OV7}\right| 
+	\]
+	\[
+	\text{To $Q_6$ στον κορεσμό: }\begin{aligned}
+		& V_{DS6} \geq V_{OV6} = 0,3 \\ \Rightarrow & V_{D6} \geq 0,3 - 2,5 = \SI{-2,2}{\volt}
+	\end{aligned}
+	\]
+	\[
+	v_o = V_{D6} = V_{D7} \text{ ,  Άρα: } \SI{-2,2}{\volt} \leq v_o \leq \SI{2,2}{\volt}
+	\]
+	\[\rightarrow \text{ Περιοχή κοινού σήματος}\]
+	\[\text{Το $Q_1$ στον κορεσμό: } 
+	\begin{aligned}
+		& V_{DS1} = V_{D1}- V_{S1} \leq V_{GS1} + \left| V_{tp}\right| \\ \Rightarrow & V_{D1} \leq V_{G1} + \left|V_{tp}\right| \\ \Rightarrow & V_{SS} + V_{GS3} \leq V_{G1} + 0,8  \\ \Rightarrow & v_{CMmin} = V_{G1} = -2,5+1-0,8= \SI{-2,3}{\volt}\end{aligned} \]
+	Η $v_{CM}$ πρέπει να είναι μεγαλύτερη από την τάση στην υποδοχή του $Q_1 - \left|V_{tp}\right|$ :
+	\[\Rightarrow v_{CMmin} = -V_{SS} + V_{tn} + V_{OV3} - \left|V_{tp}\right|\]
+	
+	Η $v_{CMmax}$ πρέπει να διασφαλίζει ότι το $Q_5$ παραμένει στον κορεσμό, δηλαδή η τάση στα άκρα του $Q_5$, $V_{SD5}$, δε θα πρέπει να μειώνεται κάτω από την $\left|V_{OV5}\right|$. Αντίστοιχα, η τάση στην υποδοχή του $Q_5$ δεν θα πρέπει να αυξάνεται πάνω από $V_{DD} - \left|V_{OV5}\right|$.
+	\[\text{Άρα: } v_{CMmax} = V_{DD} - \left|V_{OV5}\right| - V_{SG1} = V_{DD} - \left|V_{OV5}\right| - \left|V_{tp}\right| - \left|V_{OV1}\right|
+	\]
+	\[\text{Το $Q_5$ είναι στον κορεσμό: } 
+	\begin{aligned}
+		& V_{SD5} \geq V_{OV5} \\ \Rightarrow & V_{D5} \leq V_{S5} - V_{OV5} = 2,5 - 0,3 = \SI{2,2}{\volt}
+	\end{aligned} \]
+	\[v_{CMmax} = V_{DSMAX} - V_{GS1} = 2,2-1,1 = \SI{1,1}{\volt}\]
+
+\subsection{Άσκηση Σ12}
+\label{sec:Poly.S12}
+	
+		Στον CMOS τελεστικό ενισχυτή του σχήματος είναι $L=\SI{1}{\micro\metre}$, $|V^{'}_A| = \SI[per-mode=symbol]{12}{\volt\per\micro\metre}$ για όλα τα τρανζίστορ. Αν όλα λειτουργούν με την ίδια τάση υπεροδήγησης, να υπολογιστεί η απόλυτη τιμή της ώστε να επιτευχθεί dc κέρδος ανοικτού βρόχου $\SI[per-mode=symbol]{2800}{\volt\per\volt}$
+		
+				\begin{figure}[H]
+			\begin{center}
+				\begin{tikzpicture} [american]
+					\vspace{0pt}
+					\draw
+					(0,0) node[nmos] (Q4) {Q4}
+					(Q4.G) node[nmos, xscale=-1, anchor=G] (Q3) {\scalebox{-1}[1]{Q3}};
+					\draw (Q3.D) to[short] ++(0,.5) node[pmos, anchor=D] (Q1) {Q1};
+					\draw (Q4.D) to[short] ++(0,.5) node[pmos, anchor=D, xscale=-1] (Q2) {\scalebox{-1}[1]{Q2}};
+					\draw (Q3.G) node[circ] {} |- (Q3.D) node[circ] {};
+					\draw (Q1.S) -- (Q2.S);
+					%\pgfextra{\ctikzset{style={/tikz/european currents}}};
+					\draw ($(Q1.S)!0.5!(Q2.S)$) to[short, f_<=I, *-] ++ (0,1) node[pmos, anchor=D](Q5) {Q5};
+					\draw (Q5.G) to[short] ++ (-2,0)
+					node[pmos, xscale=-1, anchor=G](Q8) {\scalebox{-1}[1]{Q8}};
+					\draw (Q8.D) to[isource, l_=$I_{REF}$] ++(0,-5.5) node[vee](VEE){};
+					\draw (Q3.S) node[vee](VEE){$-V_{SS}$};
+					\draw (Q4.S) node[vee](VEE){};
+					\draw (Q4.D) to[short, *-] ++(1,0) to[short] ++(0,-1)
+					to[short] ++(1,0) node[nmos, anchor=G](Q6) {Q6};
+					\draw (Q2.D) to[short, *-] ++(1.5,0) to[C, l=$C_C$] ++ (1,0)
+					to[short, -*] (Q6.D |- Q2.D);
+					\draw (Q6.D) to[short] ++(0,3.5) node[pmos, anchor=D](Q7) {$Q7$};
+					\draw (Q1.G) node[ocirc]{} node[above](minus){$-$};
+					\draw (Q2.G) node[ocirc]{} node[above](plus){$+$};
+					\draw (Q6.D) ++ (0,2) to[short, *-] ++(1,0)
+					node[ocirc]{} node[above](vo){$v_o$};
+					\draw (Q7.G) to[short] ++(-2,0) to[short] ++(0,-1)
+					to[crossing] ($ (Q5.G) -(0,1)$) to[short] ++(-0.4,0) to[short, -*] ++(0,1);
+					\draw (Q8.G) node[circ] {} |- (Q8.D) node[circ] {};
+					\draw (Q6.S) node[vee](VEE){};
+					\draw (Q5.S) node[vcc](VCC){$+V_{DD}$};
+					\draw (Q7.S) node[vcc](VCC){};
+					\draw (Q8.S) node[vcc](VCC){};
+				\end{tikzpicture}
+			\end{center}
+		\end{figure}
+
+\textbf{Λύση}
+
+$\left|V_A\right| = \left|V^{'}_A\right| \cdot L= \SI{12}{\volt}$ \\
+(Όλα ίδια $\left|V_{OV}\right|$)
+
+\[
+\begin{aligned}
+	& I_{D1} = I_{D2} =  I_{D3} = I_{D4} = \frac{I}{2} \\ &
+	I_{D5} = I_{D6} =  I_{D7} = I_{D8} = I 
+\end{aligned}
+\]	
+
+\[
+\left.
+%\arraycolsep=1.4pt\def\arraystretch{2.2}
+\begin{aligned}
+	& r_{o7} = \frac{\left|V_A\right|}{I_{D7}} = \frac{\left|V_A\right|}{I} = r_{o6} \\ &
+	r_{o2} = r_{o4} = \frac{\left|V_A\right|}{I_{D2,4}} = \frac{2\left|V_A\right|}{I}
+\end{aligned}
+\right.
+\begin{aligned}
+	\qquad g_{m6} &= \frac{2 I_{D6}}{\left|V_{OV}\right|}= \frac{2I}{\left|V_{OV}\right|}\\
+	\qquad g_{m2} &= \frac{2 I_{D2}}{\left|V_{OV}\right|}= \frac{I}{\left|V_{OV}\right|}
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+	A_o &= A_1 \cdot A_2 = \left(-g_{m2}\cdot r_{o2}\| r_{o4} \right) \cdot \left(-g_{m6}\cdot r_{o6}\| r_{o7} \right) = 2800 \\ \Rightarrow & \frac{I}{\left|V_{OV}\right|} \cdot \left(\frac{2|V_A|}{I} \Biggm\Vert \frac{2|V_A|}{I}\right) \cdot \frac{2I}{V_{OV}} \cdot \left(\frac{|V_A|}{I} \Biggm\Vert \frac{|V_A|}{I}\right) = 2800 \\ \Rightarrow & \frac{2I^2}{\left|V_{OV}\right|^2} \cdot \frac{|V_A|}{I} \cdot \frac{|V_A|}{2I} = 2800 \\ \Rightarrow & \left|V_{OV}\right|^2 = \frac{149}{2800} \Rightarrow \left|V_{OV}\right| = \SI{0,23}{\volt}
+\end{aligned}
+\]
+
+\section{Ανάδραση}
+
+\subsection{Άσκηση Φ16,Ι14,Σ12}
+\label{sec:anadr.F16,I14,S12}
+
+\hyperref[sec:Anadrasi.xatzo.paromoia]{(Ίδια νούμερα, αλλά λιγότερο αναλυτικά)}
+
+Στον ενισχυτή του σχήματος είναι $\left|V_t\right| = \SI{1}{\volt}$, 
+$k^{'} \frac{W}{L}= \SI[per-mode=symbol]{1}{\milli\ampere\per\volt^2}$, $h_{fe}=100$, $V_{BE}=\SI{0,7}{\volt}$ και η τάση Early $V_A$ είναι $\SI{100}{\volt}$ για όλα τα τρανζίστορ (και εκείνα των πηγών ρεύματος πόλωσης). H πηγή σήματος δεν έχει συνεχή συνιστώσα. Να υπολογιστούν οι dc τάσεις στην έξοδο και στην βάση του $Q_3$ καθώς και οι τιμές των: $A$, $\beta$, $A_f$, $R_{in}$, $R_{out}$.
+
+\begin{center}
+	\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[nmos,xscale=-1](Q2){\scalebox{-1}[1]{$Q_2$}};
+		\draw (Q2.S) to[short] ++(0,-1)
+		to[short] ++ (-2,0)
+		to[isource, l= \SI{1}{m\ampere}] ++(0,-3) node[vee](vee){};
+		\draw (Q2.D) to[short] ++(0,0.5) to[isource, l_=\SI{0,5}{m\ampere}, invert] ++(0,3) node[vcc](vcc){};
+		\draw (-4,0) node[nmos](Q1){$Q_1$};
+		\draw (Q1.G) to[R, l_={$R_s=\SI{100}{\kilo\ohm}$}] ++(-4,0)
+		to[vsource, invert, l_= $V_s$] ++(0,-3) node[ground]{};
+		\draw (Q1.D) to[short] ++(0,1) node[vcc](vcc){};
+		\draw (Q2.G) to[short, -*] ++(1,0) to[R,l_=$\SI{100}{\kilo\ohm}$] ++(0,-3) node[ground]{} ++(0,3) to[R, l^=$\SI{900}{\kilo\ohm}$, -*] ++(3.5,0) to[isource, l_=\SI{5}{m\ampere}, name= is] ++(0,-3.25) node[vee](vee){} ++(0,3.25) to[short] ++(3,0)
+		to[R,  l^={$R_L=\SI{2}{\kilo\ohm}$}] ++(0,-3) node[ground]{} ++(0,3) to[short, -o] ++(2,0) node[right]{$V_o$};
+		\draw (is.center |- Q2.G) to[short] ++(0,0.6) node[npn, anchor=E](Q3){$Q_3$};
+		\draw (Q3.B) to[short, -*] (Q2.D |- Q3.B);
+		\draw (Q3.C) to[short] ++(0,0.5) node[vcc]{};
+		\draw (Q1.S) to[short] ++(0,-1)
+		to[short] ++(2,0);
+		\draw[->] to[open] ($ (Q1)  + (-2.7,-4.5) $) |- ($(Q1)  + (-1.7,-0.7) $);
+		\draw ($ (Q1)  + (-2.7,-4.5) $) node[below]{$R_{in}$};
+		\draw[->]  to[open] ($ (Q1)  + (12.4,-4.5) $) |- ($(Q1)  + (11.4,-0.7) $);
+		\draw ($ (Q1)  + (12.4,-4.5) $) node[below]{$R_{out}$};
+	\end{tikzpicture}
+\end{center}
+
+\textbf{Λύση}
+
+Έχουμε ανάδραση σειράς-παράλληλα
+
+DC ανάλυση
+
+Εφόσον $V_{G1} = V_{G2} = 0$, θα είναι και $V_{E3} = V_O = \SI{0}{\volt}$ και $V_{B3} = \SI{0,7}{\volt}$. To $I_{B3}$ είναι αμελητέο, οπότε $I_{D2} = \SI{0,5}{\milli\ampere}$.
+
+'Αρα $I_{D1} = 1 - I_{D2} = \SI{0,5}{\milli\ampere}$
+\[I_{D1} = I_{D2} \Rightarrow V_{GS1} = V_{GS2} \Rightarrow V_{G1}= V_{G2} = \SI{0}{\volt} \text{(εξηγήθηκε πιο πριν)}\]
+\[V_{OV1,2} = \sqrt{\frac{2I_D}{k^{'} \frac{W}{L}}} = \frac{1}{1}=\SI{1}{\volt}\]
+\[\text{'Αρα }  g_{m1}=g_{m2}=\frac{2I_D}{V_{OV}}= \SI[per-mode=symbol]{1}{\milli\ampere\per\volt}\]	
+\[\text{Η αντίσταση εξόδου των τρανζίστορ $Q_1$, $Q_2$ θα είναι } r_{o1,2} = \frac{V_A}{I_D} =\frac{100}{0,5}=\SI{200}{\kilo\ohm}\]
+Ίδια τιμή θεωρούμε ότι έχει και η αντίσταση εξόδου της πηγής ρεύματος πόλωσης των $\SI{0,5}{\milli\ampere}$.
+
+Η αντίσταση $r_{e3}(\equiv r_{d3})$ του $Q_3$ είναι:
+\[r_{e3} \frac{V_T}{5} = \frac{25}{5} =\SI{5}{\ohm}\]
+
+Η αντίσταση εξόδου του $Q_3$ θα είναι:
+\[r_{o3} = \frac{V_A}{I_C} = \frac{\SI{100}{\volt}}{\SI{5}{\milli\ampere}} = \SI{20}{\kilo\ohm}\]
+
+Ίδια τιμή θεωρούμε ότι έχει και η αντίσταση εξόδου της πηγής ρεύματος πόλωσης των $\SI{5}{\milli\ampere}$.
+
+\textbf{AC ανάλυση}
+
+\begin{center}
+	\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+		\draw (0,0) node[nmos,xscale=-1](Q2){\scalebox{-1}[1]{$Q_2$}};
+		\draw (Q2.S) to[short] ++(0,-1)
+		to[short] ++ (-2,0) node[ground]{};
+		\draw (Q2.D) to[short] ++(0,0.5) to[R, l_=$r_o$, invert] ++(0,3) node[tlground, rotate=180]{};
+		\draw (-4,0) node[nmos](Q1){$Q_1$};
+		\draw (Q1.G) to[R, -o] ++(-2.5,0) node[left]{$V_{sig}$};
+		\draw (Q1.D) to[short] ++(0,1) node[tlground, rotate=180]{};
+		
+		\draw (Q2.G) to[short] ++(1,0) node[below left]{(i)} to[R,l^=$\SI{100}{}\|\SI{900}{}$] ++(0,-3) node[ground]{};
+		
+		
+		\draw (Q2.G) to[open] ++(4.5,0) node[above left]{(ii)} to[R, l^=$\SI{1}{\mega\ohm}$] ++(0,-3) node[ground]{} ++(0,3)  to[short, -*] ++(2,0) to[R, l2^=$R_L$ and $\SI{2}{\kilo\ohm}$, name= is] ++(0,-3) node[ground]{} ++(0,3) to[short] ++(2,0)
+		to[R,  l2^=$r_{o3}$ and $\SI{20}{\kilo\ohm}$] ++(0,-3) node[ground]{} ++(0,3) to[short, -o] ++(3.5,0) node[right]{$V_o$};
+		
+		\draw (is.center |- Q2.G) to[short] ++(0,0.6) node[npn, anchor=E](Q3){} (Q3.text) node[above left,inner sep=15pt] {$Q_3$};
+		\draw (Q3.B) to[short, -*] (Q2.D |- Q3.B);
+		\draw (Q3.C) to[short] ++(0,0.7) to[short] ++(2,0) node[ground]{};
+		\draw (Q1.S) to[short] ++(0,-1)
+		to[short] ++(2,0);
+		
+		\draw (Q3.C) to[short] ++(1.2,0) to[R, l^=$r_{o3}$] ++(0,-2.7) to[short] ++(-1.2,0);
+		\draw (Q2.D) to[short] ++(-1.2,0) to[R, l_=$r_o$] ++(0,-2.7) to[short] ++(1.2,0);
+		
+		%\draw[red,thin,dashed] (-3.5,-3.7) rectangle (1.75,-10.5);
+		%\draw[red,thin,dashed] (-4,4) -- (3,4) -- (3,0) -- (1,-3) -- (-4,-3) -- (-4,4);
+		
+		\draw[red,dashed] ($(Q3) + (-3,-1)$) --++ (3.5,0) --++ (0,2.5)--++ (3.5,0)
+		--++ (0,-8) --++ (-7,0) --++ (0,5.5);
+		
+		%\draw [help lines] (-5,-4) grid (12,5);
+		\draw[->] to[open] ($ (Q1)  + (-2.7,-3.5) $) |- ($(Q1)  + (-1.7,-0.7) $);
+		\draw ($ (Q1)  + (-2.7,-3.5) $) node[below]{$R_{i}$};
+		\draw[->]  to[open] ($ (Q3)  + (5.3,-5.5) $) |- ($(Q3)  + (4.3,-2.7) $);
+		\draw ($ (Q3)  + (5.3,-5.5) $) node[below]{$R_{o}$};
+	\end{tikzpicture}
+\end{center}
+
+Το κύκλωμα είναι ενισχυτής με ανάδραση σειράς παράλληλα, οπότε για το ισοδύναμο μπορεί να θεωρηθεί ότι το δικτύωμα ανάδρασης ($\SI{100}{\kilo\ohm}$ , $\SI{900}{\kilo\ohm}$) διακόπτεται και η αντίσταση των $\SI{900}{\kilo\ohm}$ εμφανίζεται παράλληλα με την $\SI{100}{\kilo\ohm}$ στην πύλη του $Q_2$ (i) και σε σειρά με την $\SI{100}{\kilo\ohm}$ στον εκπομπό του $Q_3$ (ii).
+\[R_i = \infty \text{  (πύλη MOS)}\]
+\[ \begin{aligned}
+	R_o &= \SI{1}{\mega\ohm}\| \SI{2}{\kilo\ohm} \| \SI{20}{\kilo\ohm} \| \SI{20}{\kilo\ohm} \bigg\Vert \left|r_{e3} +\frac{r_o\| r_o}{h_{fe}+1}\right| = 1,66\bigg\Vert  \left[0,005+\frac{100}{101}\right] \Rightarrow \\ R_o &= \SI{622}{\kilo\ohm}\end{aligned}\]
+
+Το κέρδος της πρώτης βαθμίδας (ΔΕ με απλή έξοδο) είναι:
+\[A_1 = \frac{1}{2} g_m R_D^{'}\]
+\[\notate{R^{'}_D }{1}{\text{ Αντίσταση υποδοχών των τρανζίστορ } \rightarrow r_o\|r_o\|\ \notate{\text{δεξιά}}{1}{\parbox[t]{3in}{$r_\pi$(δλδ $r^{'}_{BE}$) \\$+(
+			\notate{\beta+1}{1}{\text{ανάκλαση}})R_{eq} = (\notate{h_{fe} +1}{1}{\parbox[t]{3in}{$r_\pi = (\beta +1) r_e$ \\ (από τύπους)}})\cdot \left(r_e+R_{eq}\right)$}}\text{ επειδή πάει γείωση}} = 200\|200\|\left[r_\pi + \left(\beta+1\right) R_{eq}\right] = 100\|\left[\left(h_{fe} +1\right)\left(r_e+R_{eq}\right)\right]=\SI{63}{\kilo\ohm}\]
+
+Το κέρδος της δεύτερης βαθμίδας CC είναι:
+\[A_2 = \notate{\frac{R_{eq}}{r_e+R_{eq}}}{1.5}{\parbox[t]{3in}{\text{mid-freq, CC} \\ \text{όπου, } $RE\|RL=R_{eq}$ } }= 0,997\]
+
+
+
+\[\text{Τελικά: } A = A_1 \cdot A_2 = \frac{1}{2} \cdot 1 \cdot 63 \cdot 0,997 = \SI[per-mode=symbol]{31,4}{\volt\per\volt}\]
+\[\rightarrow \beta = \frac{R_1}{R_1+R_2} = \frac{100}{100+900}= 0,1\]
+\[\text{Άρα το κέρδος κλειστού βρόχου είναι: }\]
+\[\notate{A_f = \frac{A}{1+A\cdot\beta}}{1}{\text{ανάδραση σειράς-παράλληλα}}= \frac{31,4}{1+31,4\cdot0,1} = \SI[per-mode=symbol]{7,58}{\volt\per\volt}\]
+Η αντίσταση εξόδου με την ανάδραση $R_{of}$ θα είναι:
+\[R_{of} = \frac{R_o}{1+A\cdot \beta} = \frac{624}{4,14} = \SI{150,7}{\ohm}\]
+Άρα αφού ισχύει $R_{of} = R_{out} \| R_L \Rightarrow R_{out} = \SI{163}{\ohm}$ \\
+Η αντίσταση $R_{if}$ θεωρείται επίσης άπειρη, όπως η $R_{in}$.
+
+\section{Ταλαντωτές}
+
+\subsection{Άσκηση Φ16}
+\label{sec:oscil.F16}
+	
+		Για τον ταλαντωτή Colpitts του σχήματος να βρεθεί η χαρακτηριστική εξίσωση λειτουργίας του, η συχνότητα ταλαντώσεων και η συνθήκη κέρδους για την έναρξη ταλαντώσεων. Να χρησιμοποιηθεί απλοποιημένο π-ισοδύναμο για το τρανζίστορ (η αντίσταση $r_\pi$ θεωρείται πολύ μεγάλη)
+	
+	\begin{center}
+		\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+			\draw (0,0) node[npn](Q1){$Q_1$};
+			\draw (Q1.E) to[short, *-] ++(0,-0.5) to[I, l_=$I$] ++(0,-2) node[ground]{};
+			\draw (Q1.D) to[L, cute, l_=$L$] ++(0,2) node[vcc]{};
+			\draw (Q1.B) to[short] ++(-1.5,0) node[ground]{};
+			\draw (Q1.E) to[short, -*] ++(3,0) to[short] ++(0,-0.5) to[C, l_=$C_2$] ++(0,-2) node[ground]{} ++(0,2.5) to[C, l^=$\infty$] ++(3,0) to[short, *-] ++(0,-0.5) to[R, l^=$R_L$] ++(0,-2) node[ground]{} ++(0,2.5) to[short, -o] ++(2,0);
+			\draw (Q1.C) to[short, *-] ++(3,0) to[C, l^=$C_1$] ++(0,-3);
+		
+		\end{tikzpicture}
+	\end{center}
+	
+	\textbf{Λύση}
+	
+	\[\rightarrow \text{Απλουστευμένο AC ισοδύναμο (μεγάλη }r_\pi \text{)}\]
+	
+	\begin{center}
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw (0,0) node[ground]{} to[short, -o] ++(2,0) node[above left]{$B$} to[open, v_=$V_\pi$] ++(0,-3) to[short, o-*] ++(2,0) to[short] ++(0,-0.5) to[C, l_=$C_2$] ++(0,-1.5) node[ground]{} ++(0,2) to[short] ++(1,0) node[above]{$E$} to[short] ++(1,0) to[short, *-] ++(0,-0.5) to[R, l^=$R_L$] ++(0,-1.5) node[ground]{} ++(0,2) to[short] ++(2,0) to[short] ++(2,0) ++(-2,0) to[cI, invert, l^=$g_m V_{\pi}$]  ++(0,3) to[short, -*] ++(2,0) node[above]{$C$} to[C, l^=$C_1$] ++(0,-3) ++(0,3) to[short] ++(2,0) to[short] ++(0,-0.5) to[L, cute, mirror, l^=$L$] ++(0,-1.5) node[ground]{};
+		\end{tikzpicture}
+	\end{center}
+	
+	Το οποίο είναι το:
+	\begin{center}
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw(0,0) ++(0,2.5) to[C, l_=$C_2$] ++(0,-3)
+			to[short] ++(3,0) node[coordinate](C1){} to[R, l^=$R_L$, v_>=$V_\pi$ ,*-*] ++(0,3) node[above]{$V_2$}
+			to[L, cute, l^=$L$, f>^=$I_2$, mirror] ++(4.5,0) ++(-4.5,0) to[short] ++(-3,0);
+			\draw (C1) to[short] ++(4.5,0) to[cI, invert, l_=$g_m V_{\pi}$, *-*]  ++(0,3) node[above]{$V_1$}
+			to[short] ++(3,0) to[C, l^=$C_1$] ++(0,-3) to[short] +(-3,0);
+		\end{tikzpicture}
+	\end{center}
+	\[R_L\bigg\Vert \frac{1}{sC_2} = \frac{\frac{R_L}{sC_2}}{R_L + \frac{1}{sC_2}} = \frac{R_L}{1+ R_LC_2 s} = \frac{1}{\frac{1}{R_L} + C_2 s}\]
+	\[\notate{I_2}{1}{\text{Παίρνει το ρεύμα που περνάει από το πηνίο}}=-V_\pi \left(\frac{1}{R_L} + C_2s \right) \quad \rightarrow \text{Ν. Ohm στην παραλληλία}\]
+	\[\begin{aligned}\text{'Αρα } &V_2-V_1 = sL\cdot I_2 \\ \Rightarrow & V_1=V_2-s L I_2 \Rightarrow \notate{V_1 = }{1}{\text{Λύνω ως προς την τάση της πηγής ρεύματος}} V_\pi +V_\pi s L\left(\frac{1}{R_L} + sC_2\right)\end{aligned}\]
+	Εξίσωση κόμβου στο $V_1$:
+	\[\begin{aligned}& g_m V_\pi - I_2 + \frac{V_1}{\frac{1}{sC_1}} = 0 \\ \Rightarrow & g_m V_\pi + V_\pi \left(\frac{1}{R_L} + C_2 s\right) + s C_1V_\pi \left[1 + sL\left(\frac{1}{R_L} + sC_2\right)\right] = 0 \\ \Rightarrow & g_m + \frac{1}{R_L}+sC_2 + sC_1 + \frac{s^2 C_1 L}{R_L} + s^3C_1C_2L = 0 \\  \notate{\Rightarrow }{2}{\text{χαρακτηριστική εξίσωση του κυκλώματος}} & s^3C_1C_2L + s^2  \frac{C_1L}{R_L}+ s\left(C_1+C_2\right) + g_m+\frac{1}{R_L} = 0 \rightarrow \text{χωρίς καμία τάση/ρεύμα}\end{aligned}\]
+	Για $s=j\omega$, έχω:
+	\[-\omega^2\frac{C_1L}{R_L} + g_m + \frac{1}{R_L} + j\omega \left(C_1+C_2-\omega^2C_1C_2L\right) = 0\]
+	
+	\[\bullet\text{ Φανταστικό μέρος $=0$  } \Rightarrow \omega^2=\frac{C_1 + C_2}{C_1C_2} \Rightarrow \omega  = \sqrt{\frac{C_1+C_2}{C_1C_2L}} \quad \rightarrow\text{   συχνότητα ταλάντωσης}\]
+	
+	\[\begin{aligned}\bullet\text{ Πραγματικό μέρος $=0$  } \Rightarrow & g_m+\frac{1}{R_L} = \frac{C_1+C_2}{C_1C_2L}\cdot \frac{C_1L}{R_L} \qquad \left(\parbox{1in}{βάζοντας όπου ω το πάνω}\right) \\ \Rightarrow & g_m\cdot R_L = \frac{C_1C_2}{C_1C_2}-1 \\ \Rightarrow & g_mR_L=\notate{\frac{C_1}{C_2}}{1}{\text{ο λόγος των πυκνωτών}} \qquad	\rightarrow\text{  συνθήκη κέρδους για έναρξη ταλαντώσεων}\end{aligned}\]
+	
+	\subsection{Άσκηση Ι14,Σ13}
+	\label{sec:oscil.I14,S13}
+	
+	Για τον ταλαντωτή Colpitts του σχήματος να βρεθεί η χαρακτηριστική εξίσωση λειτουργίας του, η συχνότητα ταλαντώσεων και η συνθήκη κέρδους για την έναρξη ταλαντώσεων. Να χρησιμοποιηθεί απλοποιημένο π-ισοδύναμο για το τρανζίστορ (η $r_\pi$ θεωρείται πολύ μεγάλη).
+	
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}[american, scale = 0.7 ]%, baseline={(current bounding box.center)}]
+			\draw (0,0) node[npn](Q1){$Q_1$} (Q1.C) node[vcc]{} (Q1.B) to[L, l_=$L$, cute] ++(-4,0) to[short] ++(0,-0.5) node[ground]{};
+			\draw (Q1.E) to[short] ++(0,-1.5) to[short] ($ (Q1.E -| Q1.B) + (0,-1.5) $) to[C, l_=$C_1$] ++(-4,0) to[short] ++(0,-0.5) node[ground]{};
+			\draw (Q1.B) to[C, l_=$C_2$, *-*] ($ (Q1.E -| Q1.B) + (0,-1.5) $);
+			\draw (Q1.E) ++(0,-1.5) to[short] ++(0,-0.5) to[isource, l_=$I$] ++(0,-2) node[ground]{} ++(0,2.5) to[C, l^=$\infty$] ++(3,0) to[short] ++(0,-0.5) to[R, l=$R_L$] ++(0,-2) node[ground]{} ++(0,2.5) to[short, -o] ++(1.3,0);
+		\end{tikzpicture}
+	\end{figure}
+	
+	\textbf{Λύση}
+	
+	AC ισοδύναμο:
+	
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw (0,0) to[short] ++(0,-3) node[ground]{} to[C, l_=$C_1$ ,-*] ++(3,0) to[C, l^=$C_2$] ++(0,3)  to[L, cute, l_=$L$] ++(-3,0) ++(3,0) to[short, -o] ++(1.5,0) node[above left]{$B$} ++(-1.5,0) ++(0,-3) to[short] ++(1.5,0) node[below]{$E$} to[open, v_>=$V_\pi$] ++(0,3) ++(0,-3) to[short] ++(1.5,0) to[short] ++(2,0) to[short] ++(0,-0.5) to[R, l^=$R_L$] ++(0,-2) node[ground]{} ++(-2,2.5) to[cI, invert, l_=$g_m V_{\pi}$, *-]  ++(0,3) to[short] ++(2,0) node[above]{$C$} to[short] ++(2,0) to[short] ++(0,-0.5) node[ground]{};
+		\end{tikzpicture}
+	\end{figure}
+	
+	Το οποίο είναι το ίδιο με το:
+	
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw (0,0) node[ground]{} to[short] ++(3,0) to[short] ++(3,0) ++(-3,0) to[C, l_=$C_1$] ++(0,-3) to[short] ++(3,0) to[R, l^=$R_L$, *-*] ++(0,3) to[short, f<^=$ $] ++(3,0) node[above]{$A$} to[cI, l^=$g_m V_{\pi}$, *-*] ++(0,-3) ++(-3,0) to[short] ++(7,0) to[C, l_=$C_2$, v^>=$V_\pi$] ++(0,3) to[L, cute, l_=$L$, f>_=$I_1$] ++(-4,0);
+		\end{tikzpicture}
+	\end{figure}
+	
+	\[ \notate{I_1}{1}{\text{ρεύμα που περνάει από το } L} =- \frac{V_\pi}{\frac{1}{sC_2}} = -sC_2 V_\pi\]
+	\[\begin{aligned}
+		V_A &=  \notate{V_L + V_\pi}{1}{\text{κοιτάει τάση του }L} = -sL\left(-sC_2V_\pi\right) + V_\pi \\ \implies \notate{V_A}{1}{\text{παίρνει τάση εξ. πηγής}}  &= V_\pi \left(1+s^2 LC_2\right)\end{aligned}\]
+	Εξίσωση κόμβου A:
+	\[\begin{aligned}
+		& g_m V_\pi - I_1 + \frac{V_A}{R_1\big\Vert \frac{1}{sC_1}} = 0 \\ \implies &g_mV_\pi + sC_2 V_\pi + V_A\cdot \frac{1}{\frac{R_L}{sR_LC_1 + 1}} = 0 \\ \implies &g_m + s C_2 + \left[1+s^2LC_2\right]\cdot\left[\frac{sR_LC_1+1}{R_L}\right] = 0 \\ \implies & g_m + sC_2 + sC_1 + \frac{1}{R_L} + s^3 C_1C_2L + s^2 \frac{LC_2}{R_L}=0 \\ \notate{\implies }{1}{\text{χαρ/κή εξίσωση}} & s^3C_1C_2L + s^2 \frac{LC_2}{R_L}+s\left(C_1+C_2\right) +g_m+ \frac{1}{R_L} = 0
+	\end{aligned}\]
+	\[\overset{s=j\omega}{\implies} g_m + \frac{1}{R_L} - \omega^2 \frac{LC_2}{R_L} + j\omega \left[\left(C_1+C_2\right)-\omega^2C_1C_2L\right] = 0\]
+	\[ \implies
+	\left \{
+	\arraycolsep=1.4pt\def\arraystretch{2.2}
+	\begin{array}{ll}
+		\left(C_1+C_2\right) -\omega^2C_1C_2L \qquad Im\\
+		g_m = \frac{1}{R_L} - \omega^2 \frac{LC_2}{R_L} = 0 \qquad Re
+	\end{array}
+	\right. \implies	\left \{
+	\arraycolsep=1.4pt\def\arraystretch{2.2}
+	\begin{array}{ll}
+		\omega = \sqrt{\frac{C_1+C_2}{C_1\cdot C_2}\cdot\frac{1}{L}} \qquad\longrightarrow\parbox{1.2in}{συχνότητα \\ ταλαντώσεων}\\
+		g_mR_L = \frac{C_2}{C_1} \qquad\qquad \longrightarrow\parbox{1.4in}{συνθήκη κέρδους \\για έναρξη ταλ.}
+	\end{array}
+	\right. 
+	\]
+	
+	\subsection{Άσκηση S12}
+	\label{sec:oscil.S12}
+	
+		Για το μονοσταθή πολυδονητή με τελεστικό ενισχυτή του σχήματος να εξηγηθεί η λειτουργία του και να σχεδιαστούν οι κυματομορφές στους στους κόμβους A, B, C, E σε κοινό διάγραμμα χρόνου, ώστε να φαίνεται ο συγχρονισμός τους. Να υπολογιστεί επίσης η αναλυτική έκφραση για τη διάρκεια T του παλμού εξόδου συναρτήσει των στοιχείων του κυκλώματος.
+	
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}[american, scale = 0.7]
+			\draw (0,0) node[op amp, yscale=-1](opamp){};
+			\draw (opamp.out) to[short, -o] ++(2,0);
+			\draw (opamp.+) to[short] ++(-1,0) to[R, l_=$R_1$] ++(-1.5,0) to[short] ++(-1,0) node[ground]{}  ++(3,0) node[above right]{C} to[short, *-] ++(0,3.5) to[D, l_=$D_2$, -*] ++(-3,0) node[above]{E} to[short] ++(0,-0.5) to[R, l^=$R_4$] ++(0,-1.5) node[ground]{} ++(0,2) to[C, l_=$C_2$, -o] ++(-3,0) ++(6,0) to[R, l^=$R_2$, *-] ++(4.5,0) coordinate(tmp1) to[short, -*] (opamp.out -| tmp1) node[above right]{A} to[short] ++(0,-3) to[R, l_=$R_3$, -*] ++(-4.5,0) coordinate(tmp2)  |- (opamp.-);
+			\draw (tmp2) node[above right]{B} to[short] ++(0,-0.5) to[C, l^=$C_1$] ++(0,-1.5) node[ground]{} ++(0,2) to[short] ++(-3,0) to[short] ++(0,-0.5) to[D, l_=$D_1$] ++(0,-1.5) node[ground]{};
+			\begin{scope}[yshift=3.7cm, xshift=-10.2cm, local bounding box=square]
+				\draw (0,1) -| ++(0.8,-1) -- ++(0.8,0);
+			\end{scope}
+			\begin{scope}[yshift=4cm, xshift=-5cm, local bounding box=sine]
+				\draw plot[domain=0:1.2,variable=\x,samples=101,smooth] (\x,{2/(1+pow(e,(-(\x*6) )))});
+				\draw (-0.8,2) -- ++(0.8,0) -- ++(0,-1);
+			\end{scope}
+			\draw[color=red, xshift=-6.2cm, yshift=3cm, loosely dashed]  plot[smooth, tension=.7, very thick] coordinates {(-1.7, -0.5) (-2.3, 1) (-2.4, 2) (-1,3.2) (0,3.5) (1.6,3.7) (2.5,3.5) (3.1,2.5) (2.8,0.1) (0.9,-1.9) (-1.7, -0.5)};
+			\draw[color=red, xshift=-2.2cm, yshift=3cm, loosely dashed]  plot[smooth, tension=.7, very thick] coordinates { (-0.3,-2.5) (-0.9,-3.5) (-1.7,-3.6) (-2.3,-3) (-2,-1.8) (0,1.5) (1.1,2.7) (2.2,3) (3.1,2.5) (3.1,0.9) (2.5,-0.1) (0.9,-1) (0.2,-1.5) (-0.3,-2.5)};
+			\draw [thick, red, -latex](-3.8,6.5) ++(0.32cm,0) to[out=30,in=180] ([xshift=-.2cm]-2.2,7.5) node[right]{\parbox{3cm}{κύκλωμα\\σκανδαλισμού}};
+			\draw [thick, red, -latex](0.8,5) ++(0.32cm,0) to[out=10,in=180] ([xshift=-.2cm]2.3,5.7)
+			node[right]{\parbox{2.5cm}{διαιρέτης \\τάσης}};
+			\draw [thick, red, -latex](-6.8,-4.2) ++(0.32cm,0) to[out=180,in=30] ([xshift=-.2cm]-7.8,-4.9) node[centered, xshift=-0.2cm, yshift=-0.2cm]{\parbox{2.5cm}{δίοδος\\ψαλιδισμού}};
+		\end{tikzpicture}
+	\end{figure}
+	
+	Στη σταθερή κατάσταση, δίχως παλμό στην είσοδο η $V_A = L_+$ και η δίοδος $D_1$ άγει κρατώντας το B σε δυναμικό $V_{D1}$. Επιλέγουμε την $R_4$ πολύ μεγάλη (σε σχέση με την $R_1$) ώστε η $D_2$ να άγει αμελητέο ρεύμα. $\rightarrow i_{R1} = i_{R2}$.
+	Ταυτόχρονα το C είναι σε δυναμικό $V_C = \beta \cdot V_A \frac{R_1}{R_1+R_2} \cdot L_+$. Η κατάσταση είναι ευσταθής διότι το $\beta L_+$ είναι μεγαλύτερο από την τάση αγωγής της $V_{R1}$ εισόδου.
+	
+	Με ένα αρνητικό μέτωπο στην είσοδο του κυκλώματος εμφανίζεται κυματομορφή $\raisebox{-2pt}{\tikz[scale=0.25]{\draw plot[domain=0:1.2,variable=\x,samples=101,smooth] (\x,{2/(1+pow(e,(-(\x*6) )))});\draw (-0.8,2) -- ++(0.8,0) -- ++(0,-1);}}$ στο E που με τη σειρά της κάνει την $D_2$ να άγει αρκετό ρεύμα και έτσι η τάση στο C πέφτει κάτω από την τάση στο B. Η είσοδος του ΤΕ γίνεται αρνητική και η τάση εξόδου γίνεται $L_-$. Αυτό οδηγεί την αλλαγή της $V_A$ σε $L_-<0 \rightarrow V_C = \beta \cdot L_-$. Λόγω της αρνητικής $V_A$ η $D_1$ είναι σε $\notate{\text{αποκοπή}}{1}{\text{εκφορτίζει εκθετικά προς $L_-$}}$ και ο $C_1$ εκφορτίζεται μέσω της $R_3$.  
+	
+	Μόλις η $v_B$ γίνει ίση με την $v_C = \beta\cdot L_-$, η τάση $V_A$ θα γίνει $L_+$ και ο $C_1$ θα αρχίσει να φορτίζεται μέχρι να αρχίσει να άγει η $D_1$.
+	
+	Κατά την εκφόρτιση του $C_1$, έχουμε:
+	\[v_B(t) = L_- - \left(L_- - V_{D1}\right)e^{-t/C_1\cdot R_3}\]
+	\[\text{Για } v_B(t)  = \beta L_- = v_C \text{ θα είναι } t = T \text{ (διάρκεια παλμού)}\]
+	\[\begin{aligned}
+		& \beta L_- = L_- - \left(L_- - V_{D1}\right)e^{-T/\tau} \qquad \tau=C_1\cdot R_3 \\ \implies & T = \tau \cdot \ln \left(\frac{V_{D1} - L_-}{\beta L_- - L_-}\right)\overset{V_D1\ll \left|L_-\right|}{\implies} T= \tau \cdot \ln \left(\frac{1}{1-\beta}\right)
+	\end{aligned}\]
+	
+	
+			\begin{center}
+			\begin{tikzpicture}
+			\begin{scope}[yshift=0cm, xshift=-1cm]
+				\draw plot[domain=0:5,variable=\x,samples=101,smooth] (\x,{2/(1+pow(e,(-((\x)*2.5) )))});
+			\end{scope}
+			\draw (-3,2) node[left]{E} -- ++(2,0) -- ++(0,-1);
+			\draw (-3,0) node[left]{A} -- ++(2,0) --++(0,-1) --++(2,0) --++(0,1) --++(3,0) node[right]{$L_+$};
+			\begin{scope}[yshift=-1cm, xshift=-1cm, local bounding box=sine]
+				\draw plot[domain=0:2,variable=\x,samples=101,smooth] (\x,{-2/(1+pow(e,(-((\x)*2.5) )))});
+			\end{scope}
+			\begin{scope}[yshift=-4cm, xshift=1cm, local bounding box=sine]
+				\draw plot[domain=0:3,variable=\x,samples=101,smooth] (\x,{2/(1+pow(e,(-((\x)*2.5) )))}) node[right]{$V_{D1}$};
+			\end{scope}
+			\draw (-3,-2) node[left]{B} --++(2,0);
+			\draw (-3,-4) node[left]{C} --++(2,0) --++(0,-1) --++(2,0) --++(0,1) --++(3,0) node[right]{$\beta L_+$};
+			\draw[loosely dashed, color=black!30] (1,-1) --++(3,0) node[right, color=black!100]{$L_-$};
+			\draw[loosely dashed, color=black!30] (1,-5) --++(3,0) node[right, color=black!100]{$\beta L_-$};
+			\draw[loosely dashed, color=black!30] (1,-3) --++(3,0) node[right, color=black!100]{$\beta L_-$};
+			%\draw[loosely dashed] (1,-1) --++(0,-3) ++(0,5) --++(6,0);
+			\draw[loosely dashed, color=black!30] (-1,-1) -- ++(0,-3) ++(0,5) --++(0,-1);
+			\draw[loosely dashed, color=black!30] (1,-1) -- ++(0,-3);
+			\draw[<->] (-0.7,0) --++(1.4,0) node [midway,fill=white] {T};
+			\end{tikzpicture}
+			\end{center}
+
+	
+		
+\subsection{Ξέμπαρκος Τ.Ε.}
+
+Για την ενίσχυση ημιτονοειδούς σήματος πλάτος $V_i$ χρησιμοποιείται τελεστικός ενισχυτής με $f_T = \SI{2}{\mega\hertz}$, $\notate{SR}{1}{\text{ρυθμός μεταβολής εξόδου}}=\SI[per-mode=symbol]{1}{\volt\per\micro\second}$ και $V_{omax} =\SI{10}{\volt}$ (κορεσμός εξόδου) σε μη αναστρέφουσα συνδεσμολογία με κέρδος 10.
+
+\begin{enumerate}[label=(\noanw\alph*)]
+	\item Αν $V_i = \SI{0,5}{\volt}$ ποια είναι η μέγιστη συχνότητα εισόδου πριν αρχίσει η παραμόρφωση της εξόδου;
+	\item Αν $V_i = \SI{50}{\milli\volt}$ ποιο είναι το μέγιστο εύρος συχνοτήτων πριν αρχίσει η παραμόρφωση της εξόδου;
+	\item Αν $f=\SI{20}{\kilo\hertz}$ ποια είναι η μέγιστη τιμή $V_i$ εισόδου πριν αρχίσει η παραμόρφωση της εξόδου;
+	\item Αν $f=\SI{5}{\kilo\hertz}$ ποια είναι η μέγιστη τιμή $V_i$ εισόδου πριν αρχίσει η παραμόρφωση της εξόδου;
+\end{enumerate}
+
+\textbf{Λύση}
+
+\begin{enumerate}[label=(\noanw\alph*)]
+	\item $V_o = A\cdot V_i = 10\cdot  0,5= \SI{5}{\volt}$
+	\[\left.\frac{dV_o}{dt}\right|_{max} = SR \implies \omega_{max}\cdot V_{o}=\frac{1}{10^{-6}}\implies f_{max} = \SI{31,8}{\kilo\hertz}\]
+	\item $v_i=\SI{50}{\milli\volt}$, $v_o=\SI{500}{\milli\volt}$
+	
+	Το μέγιστο εύρος ξεκινάει στην συχνότητα για  την οποία $\omega \cdot
+	V^{'}_o = SR^{'}\implies f=\SI{318,3}{\kilo\hertz}$
+	\[\text{Όμως, η συχνότητα 3db μικρού σήματος είναι: } f_{3db}=\frac{f_T}{\notate{1+\frac{R_2}{R_1}}{1}{\text{παρονομαστής =A}}} =\frac{2\cdot10^6 }{10} = \SI{200}{\kilo\hertz}\]
+	Άρα η χρήσιμη συχνότητα είναι περιορισμένη στα  $\SI{200}{\kilo\hertz}$.
+	\item Η έξοδος θα παραμορφωθεί στην τιμή της $V_i$ που επιφέρει: 
+	\[\begin{aligned}
+		\left.\frac{dV_o}{dt}\right|_{max} = SR \implies & 10v_i \cdot 2 \pi\cdot 20 \cdot 10^3 = \frac{1}{10^{-6}} \\ \implies & v_i = \frac{1/10^{-6}}{10\cdot2\pi\cdot 8 \cdot 10^3}\implies v_i = 0,795
+	\end{aligned}\]
+	\item Για $f = \SI{5}{\kilo\hertz}$, ο περιορισμός του μέγιστου εύρους συμβαίνει στην τιμή $v_i$ που δίνεται από τον τύπο: \[\omega \cdot 10v_i=SR\implies v_i = \frac{1/10^{-6}}{2\pi\cdot5\cdot 10^3 \cdot10} = \SI{3,18}{\volt}\] Τέτοια είσοδος όμως θα προκαλούσε ιδανικά έξοδο \SI{31,8}{\volt}, το οποίο ξεπερνάει το $V_{omax}$. Άρα:
+	\[V_{imax} = \frac{V_{omax}}{10}=\SI{1}{\volt} \text{[ peak.]}\]
+\end{enumerate}
+	
+% HELPERS 
+%\draw [help lines] (-5,-2) grid (7,7);
+%\draw (is.center |- Q2.G) node {$A$};
+%%%%
+%% NOTATE
+%% \notate[B<race>]{<referenced math>}{<dropline length in \baselineskips>}{<math notation>}
+%% \notate{<referenced math>}{<dropline length in \baselineskips>}{<math notation>}
+%% \notate{r_{o4} \| r_{o2} }{2}{\text{ Διαφορικός ενισχυτής BJT με ενεργό φορτίο}}
+%%% \SI[per-mode=symbol]{3}{\milli\ampere\per\volt}
+%%%% \label{sec:sedra_smith}
+
+%OLD
+%xelatex -synctex=1 -interaction=nonstopmode %.tex
+%NEW
+%xelatex -interaction=nonstopmode -output-driver='xdvipdfmx -z0' %.tex
+% NEW NEW
+%xelatex -synctex=1 --shell-escape -interaction=nonstopmode %.tex
+% NEW NEW NEW
+% xelatex -synctex=1 --shell-escape -interaction=nonstopmode -output-driver='xdvipdfmx -z0' %.tex
+
+%Κείμενο με ελληνικά γράμματα! (25/175)
+% TODO : σελ. 32 το Φ13 το λύνει πιο αναλυτικά από τον χάτζο(αν και με άλλα νούμερα). Μήπως να μεταφέρω την άσκηση εκεί;
+% TODO : Να τσεκάρω και τα μεγέθη της γραμματοσειςράς των εξισώσεων.
+
+\end{document}
+

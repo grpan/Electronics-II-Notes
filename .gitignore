@@ -1,0 +1,6 @@
+*.md5
+*.aux*
+*.log
+*.out
+*.gz
+*.toc
